@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Käyttäjän X muistilista</h1>
+
+  <p>
+    <a href="#" class="btn btn-success">Lisää</a>
+  </p>
+
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Nimi</th>
+        <th>Kuvaus</th>
+        <th>Prioriteettiaste</th>
+        <th>Luokka/Luokat</th>
+        <th>Lisäyspäivä</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <!-- Listataan pelit tähän -->
+      <tr>
+        <td><a href="#">Askare 1</a></td>
+        <td>blah blah blah</td>
+        <td>5</td>
+        <td>Luokka A, Luokka B</td>
+        <td>9.12.2014</td>
+        <th><a class="btn btn-default btn-sm" href="#">Muokkaa</a></th>
+      </tr>
+    </tbody>
+  </table>
+{% endblock %}
