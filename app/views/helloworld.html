@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <h1>Hello World!</h1>
+    {% extends "base.html" %}
+    {% block content %}
+    <h1>Painikkeet</h1>
+    <button>Tavallinen painike</button>
+    <button class="btn btn-default">Bootstrap painike</button>
+    <button class="btn btn-primary">Bootstrap painike</button>
+    <button class="btn btn-success">Bootstrap painike</button>
+    <button class="btn btn-danger">Bootstrap painike</button>
+
+    <h1>Tekstikentät</h1>
+    <input type="text" placeholder="Tavallinen tekstikenttä">
+    <input type="text" class="form-control" placeholder="Bootstrap tekstikenttä">
+
+    <h1>Taulukot</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Tavallinen</th>
+                <th>Taulukko</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Tekstiä</td>
+                <td>Tekstiä</td>
+            </tr>
+            <tr>
+                <td>Tekstiä</td>
+                <td>Tekstiä</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Bootstrap</th>
+                <th>Taulukko</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Tekstiä</td>
+                <td>Tekstiä</td>
+            </tr>
+            <tr>
+                <td>Tekstiä</td>
+                <td>Tekstiä</td>
+            </tr>
+        </tbody>
+    </table>
+    {% endblock %}
+    <!--    <head>
+            <title>TODO supply a title</title>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        </head>
+        <body>
+            <div>TODO write content</div>
+        </body>-->
+</html>
