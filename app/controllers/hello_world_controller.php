@@ -4,8 +4,7 @@
 
     public static function index(){
       // make-metodi renderöi app/views-kansiossa sijaitsevia tiedostoja
-//   	  View::make('home.html');
-        echo 'Tämä on etusivusi!';
+   	  View::make('suunnitelmat/home.html');
     }
 
     public static function sandbox(){
