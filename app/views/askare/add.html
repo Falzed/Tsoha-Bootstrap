@@ -1,30 +1,30 @@
 {% extends "base.html" %}
 {% block content %}
-  <h1>Lisää askare</h1>
+<h1>Lisää askare</h1>
 
-  <form method="post" action="{{base_path}}/askare">
+<form method="post" action="{{base_path}}/askare">
     <div class="form-group">
-      <label>Nimi</label>
-      <input type="text" name="nimi" class="form-control">
+        <label>Nimi</label>
+        <input type="text" name="nimi" class="form-control">
     </div>
 
     <div class="form-group">
-      <label>Prioriteetti</label>
-      <input type="text" name="prioriteetti" class="form-control">
+        <label>Prioriteetti</label>
+        <input type="text" name="prioriteetti" class="form-control">
     </div>
 
     <div class="form-group">
-      <label>Luokat</label>
-      <input type="text" name="luokat" class="form-control">
+        <label>Luokat</label>
+        <input type="text" name="luokat" class="form-control">
     </div>
 
     <div class="form-group">
-      <label>Kuvaus</label>
-      <textarea name="description" class="form-control"></textarea>
+        <label>Kuvaus</label>
+        <textarea name="description" class="form-control"></textarea>
     </div>
 
     <div class="form-group">
-      <button type="submit" class="btn btn-primary">Lisää</button>
+        <button type="submit" class="btn btn-primary">Lisää</button>
     </div>
-  </form>
+</form>
 {% endblock %}
