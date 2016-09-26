@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>{{askare.nimi}}</h1>
+  <p>
+    <button class="btn btn-danger">Poista</button> <a href="#" class="btn btn-default">Muokkaa</a>
+  </p>
+  <ul>
+    <li><strong>Prioriteettiaste</strong>{{askare.prioriteetti}}</li>
+    <li><strong>Luokka/Luokat</strong>{{askare.luokat}}</li>
+    <li><strong>Lisäyspäivä:</strong> {{askare.added}}</li>
+  </ul>
+  <p>
+    {{askare.description}}
+  </p>
+{% endblock %}

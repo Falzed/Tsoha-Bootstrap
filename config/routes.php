@@ -9,11 +9,7 @@
   });
   
   $routes->get('/askareet', function() {
-    HelloWorldController::listaus();
-  });
-  
-  $routes->get('/askareet/1', function() {
-    HelloWorldController::askare();
+      AskareController::listaus();
   });
   $routes->get('/login', function() {
     HelloWorldController::kirjautuminen();
@@ -21,6 +17,15 @@
   $routes->get('/register', function() {
     HelloWorldController::rekisteroityminen();
   });
-  $routes->get('/askareet/1/modify', function() {
-    HelloWorldController::muokkaus();
+  $routes->get('/askareet/:id/modify', function($id) {
+      AskareController::muokkaus($id);
+  });
+  $routes->post('/askare', function() {
+      AskareController::tallenna();
+  });
+  $routes->get('/askare/add', function() {
+      AskareController::uusi();
+  });
+  $routes->get('/askareet/:id', function($id) {
+    AskareController::askare($id);
   });
