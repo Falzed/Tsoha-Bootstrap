@@ -2,25 +2,27 @@
 
 class Askare extends BaseModel {
 
-    public $id, $kayttaja_id, $nimi, $description, $prioriteetti, $luokat, $added, $luokat_string;
+    public $id, $kayttaja_id, $nimi, $description, $prioriteetti, $added, $luokat_string;
 
     public function __construct($attributes) {
         parent::__construct($attributes);
     }
 
-    private static function classesToString($luokat_arg) {
+    private static function classesToString($askareId) {
+        $query = DB::connection()->prepare('SELECT * FROM AskareittenLuokat WHERE id = :askareId');
+        $query->execute();
+        $rows = $query->fetchAll();
         $luokat_string = '';
-        if (count($luokat_arg) == 1) {
-            $luokat_string . $luokka[0];
-        }
-        if (count($luokat_arg) > 1) {
-            $luokat_string . $luokka[0];
-        } {
-            for ($i = 0; $i <= count($luokat_arg) - 1; $i++) {
-                $luokat_string . $luokka[i] . ', ';
+        if (count($rows) > 1) {
+            for($i = 0;
+            $i<count($rows)-1) {
+                $luokat_string . $row['askare_nimi'] . ', ';
             }
-            $luokat_string . $luokka[count($luokat_arg) - 1];
-        }        
+            $luokat_string . $rows[count($rows) - 1]['askare_nimi'];
+        }
+        if (count($rows) == 1) {
+            $luokat_string . $rows[count($rows) - 1]['askare_nimi'];
+        }
 
         return $luokat_string;
     }
@@ -32,7 +34,6 @@ class Askare extends BaseModel {
         $askareet = array();
 
         foreach ($rows as $row) {
-            ;
 
             $askareet[] = new Askare(array(
                 'id' => $row['id'],
@@ -40,7 +41,6 @@ class Askare extends BaseModel {
                 'nimi' => $row['nimi'],
                 'description' => $row['description'],
                 'prioriteetti' => $row['prioriteetti'],
-                'luokat' => $row['luokat'],
                 'added' => $row['added'],
                 'luokat_string' => Askare::classesToString($row['luokat'])
             ));
@@ -61,7 +61,6 @@ class Askare extends BaseModel {
                 'nimi' => $row['nimi'],
                 'description' => $row['description'],
                 'prioriteetti' => $row['prioriteetti'],
-                'luokat' => $row['luokat'],
                 'added' => $row['added'],
                 'luokat_string' => Askare::classesToString($row['luokat'])
             ));
