@@ -26,6 +26,6 @@
   $routes->get('/askare/add', function() {
       AskareController::uusi();
   });
-  $routes->get('/askareet/:id', function($id) {
+  $routes->get('/askare/:id', function($id) {
     AskareController::askare($id);
   });

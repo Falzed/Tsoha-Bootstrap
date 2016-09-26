@@ -2,7 +2,7 @@
 {% block content %}
   <h1>{{askare.nimi}}</h1>
   <p>
-    <button class="btn btn-danger">Poista</button> <a href="#" class="btn btn-default">Muokkaa</a>
+    <button class="btn btn-danger">Poista</button> <a href="{{base_path}}/askare/{{askare.id}}/edit" class="btn btn-default">Muokkaa</a>
   </p>
   <ul>
     <li><strong>Prioriteettiaste</strong>{{askare.prioriteetti}}</li>
