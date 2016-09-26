@@ -17,7 +17,7 @@
   $routes->get('/register', function() {
     HelloWorldController::rekisteroityminen();
   });
-  $routes->get('/askareet/:id/modify', function($id) {
+  $routes->get('/askare/:id/edit', function($id) {
       AskareController::muokkaus($id);
   });
   $routes->post('/askare', function() {

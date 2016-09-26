@@ -9,12 +9,12 @@ class AskareController extends BaseController {
 
     public static function askare($id) {
         $askare = Askare::find($id);
-        View::make('askare/askare.html', array('askare' => askare));
+        View::make('askare/askare.html', array('askare' => $askare));
     }
 
     public static function muokkaus($id) {
         $askare = Askare::find($id);
-        View::make('askare/muokkaus.html', array('askare' => askare));
+        View::make('askare/muokkaus.html', array('askare' => $askare));
     }
 
     public static function tallenna() {
@@ -32,7 +32,7 @@ class AskareController extends BaseController {
 
     public static function uusi() {
 
-        View::make('askare/muokkaus.html', array('askare' => askare));
+        View::make('askare/muokkaus.html', array('askare' => $askare));
     }
 
 }

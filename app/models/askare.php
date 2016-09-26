@@ -67,7 +67,7 @@ class Askare extends BaseModel {
                 'kayttaja_id' => $row['kayttaja_id'],
                 'nimi' => $row['nimi'],
                 'prioriteetti' => $row['prioriteetti'],
-                'luokat' => $luokat_temp,
+                'luokat' => $row['luokat'],
                 'added' => $row['added']
             ));
         }
