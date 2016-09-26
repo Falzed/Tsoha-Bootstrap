@@ -24,7 +24,7 @@
       AskareController::tallenna();
   });
   $routes->get('/askare/add', function() {
-      AskareController::tallenna();
+      AskareController::uusi();
   });
   $routes->get('/askareet/:id', function($id) {
     AskareController::askare($id);

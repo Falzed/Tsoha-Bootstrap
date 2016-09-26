@@ -19,20 +19,20 @@ class AskareController extends BaseController {
 
     public static function tallenna() {
         $params = $_POST;
-        $askare = new Askare(array(
-            'nimi' => $params['nimi'],
-            'description' => $params['description'],
-            'prioriteetti' => $params['prioriteetti'],
-            'luokat' => $params['luokat']
-        ));
+//        $askare = new Askare(array(
+//            'nimi' => $params['nimi'],
+//            'description' => $params['description'],
+//            'prioriteetti' => $params['prioriteetti'],
+//            'luokat' => $params['luokat']
+//        ));
         Kint::dump($params);
-        $askare->tallenna();
-        Redirect::to('/askare/' . $askare->id, array('message' => 'Askare on lisätty muistilistaasi!'));
+//        $askare->tallenna();
+//        Redirect::to('/askare/' . $askare->id, array('message' => 'Askare on lisätty muistilistaasi!'));
     }
 
     public static function uusi() {
 
-        View::make('askare/muokkaus.html', array('askare' => $askare));
+        View::make('askare/add.html');
     }
 
 }
