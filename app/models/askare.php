@@ -31,17 +31,7 @@ class Askare extends BaseModel {
         foreach ($rows as $row) {
             //luokat tietokannassa stringinä
             $luokat_string = $row['luokat'];
-//            $luokat_temp = parseClasses($luokat_string);
-            $uusiLuokka = '';
-            $luokat_temp = array();
-            for ($i = 0; $i <= strlen($luokat_string); $i++) {
-                if (substr($luokat_string, (-1) * strlen($luokat_string) + $i, 1) != ',' && substr($luokat_string, (-1) * strlen($luokat_string) + $i, 1) != ' ') {
-                    $uusiLuokka . substr($luokat_string, (-1) * strlen($luokat_string) + $i, 1);
-                } else if (substr($luokat_string, (-1) * strlen($luokat_string) + $i, 1) == ',') {
-                    $luokat_temp[] = $uusiLuokka;
-                    $uusiLuokka = '';
-                }
-            }
+            $luokat_temp = Askare::parseClasses($luokat_string);
 
             $askareet[] = new Askare(array(
                 'id' => $row['id'],
@@ -75,7 +65,7 @@ class Askare extends BaseModel {
     }
 
     public function tallenna() {
-        $query = DB::connection()->prepare('INSERT INTO Askare (nimi, description, prioriteetti, luokat) VALUES (:nimi, :description, :prioriteetti, :luokat) RETURNING id');
+        $query = DB::connection()->prepare('INSERT INTO Askare (nimi, description, prioriteetti, luokat, added) VALUES (:nimi, :description, :prioriteetti, :luokat, NOW()) RETURNING id');
         $query->execute(array('nimi' => $this->nimi, 'description' => $this->description, 'prioriteetti' => $this->prioriteetti, 'luokat' => $this->luokat));
         $row = $query->fetch();
         $this->id = $row['id'];
