@@ -11,6 +11,6 @@ CREATE TABLE Askare(
     nimi varchar(50) NOT NULL,
     description varchar(500),
     prioriteetti INTEGER,
-    luokat varchar(500),
+    luokat array,
     added DATE
 );

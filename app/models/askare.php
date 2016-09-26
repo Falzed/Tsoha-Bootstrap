@@ -2,24 +2,27 @@
 
 class Askare extends BaseModel {
 
-    public $id, $kayttaja_id, $nimi, $description, $prioriteetti, $luokat, $added;
+    public $id, $kayttaja_id, $nimi, $description, $prioriteetti, $luokat, $added, $luokat_string;
 
     public function __construct($attributes) {
         parent::__construct($attributes);
     }
 
-    private static function parseClasses($luokat_string) {
-        $uusiLuokka = '';
-        $luokat_temp = '';
-        for ($i = 0; $i <= strlen($luokat_string); $i++) {
-            if (substr($luokat_string, (-1) * strlen($luokat_string) + $i, 1) != ',' && substr($luokat_string, (-1) * strlen($luokat_string) + $i, 1) != ' ') {
-                $uusiLuokka . substr($luokat_string, (-1) * strlen($luokat_string) + $i, 1);
-            } else if (substr($luokat_string, (-1) * strlen($luokat_string) + $i, 1) == ',') {
-                $luokat_temp[] = $uusiLuokka;
-                $uusiLuokka = '';
-            }
+    private static function classesToString($luokat_arg) {
+        $luokat_string = '';
+        if (count($luokat_arg) == 1) {
+            $luokat_string . $luokka[0];
         }
-        return $luokat_temp;
+        if (count($luokat_arg) > 1) {
+            $luokat_string . $luokka[0];
+        } {
+            for ($i = 0; $i <= count($luokat_arg) - 1; $i++) {
+                $luokat_string . $luokka[i] . ', ';
+            }
+            $luokat_string . $luokka[count($luokat_arg) - 1];
+        }        
+
+        return $luokat_string;
     }
 
     public static function kaikki() {
@@ -29,9 +32,7 @@ class Askare extends BaseModel {
         $askareet = array();
 
         foreach ($rows as $row) {
-            //luokat tietokannassa stringinä
-//            $luokat_string = $row['luokat'];
-//            $luokat_temp = Askare::parseClasses($luokat_string);
+            ;
 
             $askareet[] = new Askare(array(
                 'id' => $row['id'],
@@ -40,7 +41,8 @@ class Askare extends BaseModel {
                 'description' => $row['description'],
                 'prioriteetti' => $row['prioriteetti'],
                 'luokat' => $row['luokat'],
-                'added' => $row['added']
+                'added' => $row['added'],
+                'luokat_string' => Askare::classesToString($row['luokat'])
             ));
         }
 
@@ -60,7 +62,8 @@ class Askare extends BaseModel {
                 'description' => $row['description'],
                 'prioriteetti' => $row['prioriteetti'],
                 'luokat' => $row['luokat'],
-                'added' => $row['added']
+                'added' => $row['added'],
+                'luokat_string' => Askare::classesToString($row['luokat'])
             ));
         }
         return $askare;
