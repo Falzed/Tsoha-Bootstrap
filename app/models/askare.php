@@ -31,7 +31,17 @@ class Askare extends BaseModel {
         foreach ($rows as $row) {
             //luokat tietokannassa stringinä
             $luokat_string = $row['luokat'];
-            $luokat_temp = parseClasses($luokat_string);
+//            $luokat_temp = parseClasses($luokat_string);
+            $uusiLuokka = '';
+            $luokat_temp = array();
+            for ($i = 0; $i <= strlen($luokat_string); $i++) {
+                if (substr($luokat_string, (-1) * strlen($luokat_string) + $i, 1) != ',' && substr($luokat_string, (-1) * strlen($luokat_string) + $i, 1) != ' ') {
+                    $uusiLuokka . substr($luokat_string, (-1) * strlen($luokat_string) + $i, 1);
+                } else if (substr($luokat_string, (-1) * strlen($luokat_string) + $i, 1) == ',') {
+                    $luokat_temp[] = $uusiLuokka;
+                    $uusiLuokka = '';
+                }
+            }
 
             $askareet[] = new Askare(array(
                 'id' => $row['id'],

@@ -2,7 +2,7 @@
 
 class AskareController extends BaseController {
 
-    public static function index() {
+    public static function listaus() {
         $askareet = Askare::kaikki();
         View::make('askare/listaus.html', array('askareet' => $askareet));
     }
