@@ -16,11 +16,11 @@ CREATE TABLE Askare(
 
 CREATE TABLE Luokka(
     id SERIAL PRIMARY KEY,
-    nimi varchar(50)    
+    nimi UNIQUE varchar(50)    
 );
 
 CREATE TABLE AskareittenLuokat(
     askare_id INTEGER REFERENCES Askare(id),
     luokka_id INTEGER REFERENCES Luokka(id),  
-    askare_nimi varchar(50) REFERENCES Askare(nimi)
+    luokka_nimi varchar(50) REFERENCES Luokka(nimi)
 );

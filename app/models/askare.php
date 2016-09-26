@@ -14,14 +14,13 @@ class Askare extends BaseModel {
         $rows = $query->fetchAll();
         $luokat_string = '';
         if (count($rows) > 1) {
-            for($i = 0;
-            $i<count($rows)-1) {
-                $luokat_string . $row['askare_nimi'] . ', ';
+            for($i = 0; $i<count($rows)-1; i++) {
+                $luokat_string . $row['luokka_nimi'] . ', ';
             }
-            $luokat_string . $rows[count($rows) - 1]['askare_nimi'];
+            $luokat_string . $rows[count($rows) - 1]['luokka_nimi'];
         }
         if (count($rows) == 1) {
-            $luokat_string . $rows[count($rows) - 1]['askare_nimi'];
+            $luokat_string . $rows[count($rows) - 1]['luokka_nimi'];
         }
 
         return $luokat_string;
