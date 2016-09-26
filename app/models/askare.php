@@ -14,7 +14,7 @@ class Askare extends BaseModel {
         $rows = $query->fetchAll();
         $luokat_string = '';
         if (count($rows) > 1) {
-            for($i = 0; $i<count($rows)-1; i++) {
+            for ($i = 0; $i < count($rows) - 1; $i++) {
                 $luokat_string . $row['luokka_nimi'] . ', ';
             }
             $luokat_string . $rows[count($rows) - 1]['luokka_nimi'];
@@ -24,6 +24,20 @@ class Askare extends BaseModel {
         }
 
         return $luokat_string;
+    }
+
+    private static function stringToClasses($string) {
+        $luokat_array = array();
+        $uusiLuokka = '';
+        for ($i = 0; $i < strlen($string); $i++) {
+            if (substr($string, (-1) * strlen($string) + $i, 1) != ',' && substr($string, (-1) * strlen($string) + $i, 1) != ' ') {
+                $uusiLuokka . substr($string, (-1) * strlen($string) + $i, 1);
+            } else if (substr($string, (-1) * strlen($string) + $i, 1) != ',') {
+                $luokat_array[] = $uusiLuokka;
+                $uusiLuokka = '';
+            }
+        }
+        return $luokat_array;
     }
 
     public static function kaikki() {
@@ -68,10 +82,14 @@ class Askare extends BaseModel {
     }
 
     public function tallenna() {
-        $query = DB::connection()->prepare('INSERT INTO Askare (nimi, description, prioriteetti, luokat, added) VALUES (:nimi, :description, :prioriteetti, :luokat, NOW()) RETURNING id');
-        $query->execute(array('nimi' => $this->nimi, 'description' => $this->description, 'prioriteetti' => $this->prioriteetti, 'luokat' => $this->luokat));
+
+        $query = DB::connection()->prepare('INSERT INTO Askare (nimi, description, prioriteetti, added) VALUES (:nimi, :description, :prioriteetti, NOW()) RETURNING id');
+        $luokat_temp = Askare::stringToClasses($this->luokat_string);
+        $query->execute(array('nimi' => $this->nimi, 'description' => $this->description, 'prioriteetti' => $this->prioriteetti));
         $row = $query->fetch();
         $this->id = $row['id'];
+        
+        
         Kint::trace();
         Kint::dump($row);
     }
