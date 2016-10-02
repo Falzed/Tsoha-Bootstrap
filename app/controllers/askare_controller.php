@@ -25,13 +25,13 @@ class AskareController extends BaseController {
             'nimi' => $params['nimi'],
             'description' => $params['description'],
             'prioriteetti' => $params['prioriteetti'],
-            'luokat' => $params['luokat']
+            'luokat_string' => $params['luokat_string']
         );
         $askare = new Askare(array(
             'nimi' => $params['nimi'],
             'description' => $params['description'],
             'prioriteetti' => $params['prioriteetti'],
-            'luokat' => $params['luokat']
+            'luokat_string' => $params['luokat_string']
         ));
         Kint::dump($params);
 

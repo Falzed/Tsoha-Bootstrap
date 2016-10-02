@@ -22,5 +22,7 @@ CREATE TABLE Luokka(
 
 CREATE TABLE AskareittenLuokat(
     askare_id INTEGER REFERENCES Askare(id),
-    luokka_id INTEGER REFERENCES Luokka(id)
+    luokka_id INTEGER REFERENCES Luokka(id),
+    kayttaja_id INTEGER REFERENCES Kayttaja(id),
+    luokka_nimi varchar(50)
 );
