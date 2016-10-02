@@ -10,7 +10,7 @@ class AskareController extends BaseController {
     }
 
     public static function askare($id) {
-        $askare = Askare::find($id, get_user_logged_in()->id);
+        $askare = Askare::find($id, self::get_user_logged_in()->id);
         View::make('askare/askare.html', array('askare' => $askare));
     }
 
@@ -27,12 +27,17 @@ class AskareController extends BaseController {
             'prioriteetti' => $params['prioriteetti'],
             'luokat' => $params['luokat']
         );
-        $askare = new Askare(array($attributes));
+        $askare = new Askare(array(
+            'nimi' => $params['nimi'],
+            'description' => $params['description'],
+            'prioriteetti' => $params['prioriteetti'],
+            'luokat' => $params['luokat']
+        ));
         Kint::dump($params);
 
         $errors = $askare->errors();
         if (count($errors) == 0) {
-            $askare->tallenna();
+            $askare->tallenna(self::get_user_logged_in()->id);
             Redirect::to('/askare/' . $askare->id, array('message' => 'Askare on lisätty muistilistaasi!'));
         } else {
             View::make('askare/add.html', array('errors' => $errors, 'attributes' => $attributes));

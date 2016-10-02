@@ -17,7 +17,8 @@
             <th>Prioriteettiaste</th>
             <th>Luokka/Luokat</th>
             <th>Lisäyspäivä</th>
-            <th></th>
+            <th>Poista</th>
+            <th>Muokkaa</th>
         </tr>
     </thead>
 
@@ -29,8 +30,8 @@
             <td>{{askare.prioriteetti}}</td>
             <td>{{askare.luokat_string}}</td>
             <td>{{askare.added}}</td>
-            {{forms.destroy_button("#{base_path}/askare/#{askare.id}/delete")}}
-            {{forms.edit_button("#{base_path}/askare/#{askare.id}/edit")}}
+            <td>{{forms.destroy_button("#{base_path}/askare/#{askare.id}/delete")}}</td>
+            <td>{{forms.edit_button("#{base_path}/askare/#{askare.id}/edit")}}</td>
         </tr>
         {% endfor %}
     </tbody>

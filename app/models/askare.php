@@ -67,7 +67,7 @@ class Askare extends BaseModel {
         $query = DB::connection()->prepare('SELECT * FROM Askare WHERE id = :id AND kayttaja_id = :kayttaja_id LIMIT 1');
         $query->execute(array('id' => $id, 'kayttaja_id' => $kayttaja_id));
         $row = $query->fetch();
-
+        $askare = null;
         if ($row) {
             $askare = new Askare(array(
                 'id' => $row['id'],
@@ -82,11 +82,10 @@ class Askare extends BaseModel {
         return $askare;
     }
 
-    public function tallenna() {
-
-        $query = DB::connection()->prepare('INSERT INTO Askare (nimi, description, prioriteetti, added) VALUES (:nimi, :description, :prioriteetti, NOW()) RETURNING id');
+    public function tallenna($kayttaja_id) {
+        $query = DB::connection()->prepare('INSERT INTO Askare (nimi, description, prioriteetti, added, kayttaja_id) VALUES (:nimi, :description, :prioriteetti, NOW(), :kayttaja_id) RETURNING id');
         $luokat_temp = Askare::stringToClasses($this->luokat_string);
-        $query->execute(array('nimi' => $this->nimi, 'description' => $this->description, 'prioriteetti' => $this->prioriteetti));
+        $query->execute(array('nimi' => $this->nimi, 'description' => $this->description, 'prioriteetti' => $this->prioriteetti, 'kayttaja_id' => $kayttaja_id));
         $row = $query->fetch();
         $this->id = $row['id'];
 

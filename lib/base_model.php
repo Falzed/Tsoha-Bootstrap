@@ -42,7 +42,7 @@ class BaseModel {
 
     public function validate_numeric($num) {
         $errors = array();
-        if(is_numeric($num)) {
+        if(!is_numeric($num)) {
             $errors[] = 'Ei ole numero';
         }
         return $errors;
