@@ -4,7 +4,7 @@
 <h1>{{askare.nimi}}</h1>
 <p>
     {{forms.destroy_button("#{base_path}/askare/#{askare.id}/delete")}}
-    {{forms.edit_button("#{base_path}/askare/#{askare.id}/edit")}}
+    <a href ="{{base_path}}/askare/:id/edit"><button class="btn btn-danger">{{text|default('Muokkaa')}}</button></a>
 </p>
 
 <ul>
