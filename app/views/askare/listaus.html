@@ -34,7 +34,8 @@
             <td>{{askare.luokat_string}}</td>
             <td>{{askare.added}}</td>
             <td>{{forms.destroy_button("#{base_path}/askare/#{askare.id}/delete")}}</td>
-            <td>{{forms.edit_button("#{base_path}/askare/#{askare.id}/edit")}}</td>
+            <td><a href ="{{base_path}}/askare/:id/edit"<button class="btn btn-danger">{{text|default('Muokkaa')}}</button></a></td>
+<!--            <td>{{forms.edit_button("#{base_path}/askare/#{askare.id}/edit")}}</td>-->
         </tr>
         {% endfor %}
     </tbody>
