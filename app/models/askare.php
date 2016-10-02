@@ -107,9 +107,12 @@ class Askare extends BaseModel {
     }
     
     public function destroy() {
-        $query = DB::connection()->prepare('DELETE Askare (nimi, description, prioriteetti, added) VALUES (:nimi, :description, :prioriteetti, NOW()) RETURNING id');
+        $askare_id = $this->id;
+        $query_luokat = DB::connection()->prepare('DELETE FROM AskareittenLuokat WHERE askare_id = :askare_id');
+        $query_luokat->execute(array('askare_id' => $askare_id));
+        $query = DB::connection()->prepare('DELETE FROM Askare WHERE id=:id RETURNING id');
         $luokat_temp = Askare::stringToClasses($this->luokat_string);
-        $query->execute(array('nimi' => $this->nimi, 'description' => $this->description, 'prioriteetti' => $this->prioriteetti));
+        $query->execute(array('id' => $this->id));
         $row = $query->fetch();
         $this->id = $row['id'];
 

@@ -4,6 +4,9 @@
 {% if user_logged_in %}
 <h1>Käyttäjän {{user_logged_in.nimi}} muistilista</h1>
 {% endif %}
+{% if message %}
+{{message}}
+{% endif %}
 
 <p>
     <a href="{{base_path}}/askare/add" class="btn btn-success">Lisää</a>

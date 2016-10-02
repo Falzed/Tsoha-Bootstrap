@@ -69,10 +69,10 @@ class AskareController extends BaseController {
     }
     
     public static function destroy($id) {
-        $askare = Askare::find($id, get_user_logged_in()->id);
+        $askare = Askare::find($id, self::get_user_logged_in()->id);
         $askare->destroy();
         
-        Redirect::to('/askare', array('message' => 'Peli on poistettu onnistuneesti!'));
+        Redirect::to('/askareet', array('message' => 'Askare on poistettu onnistuneesti!'));
     }
 
 }
