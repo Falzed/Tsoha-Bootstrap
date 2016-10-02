@@ -1,15 +1,18 @@
 {% extends "base.html" %}
+{% import "macros/forms.html" as forms %}
 {% block content %}
-  <h1>{{askare.nimi}}</h1>
-  <p>
-    <button class="btn btn-danger">Poista</button> <a href="{{base_path}}/askare/{{askare.id}}/edit" class="btn btn-default">Muokkaa</a>
-  </p>
-  <ul>
+<h1>{{askare.nimi}}</h1>
+<p>
+    {{forms.destroy_button("#{base_path}/askare/#{askare.id}/delete")}}
+    {{forms.edit_button("#{base_path}/askare/#{askare.id}/edit")}}
+</p>
+
+<ul>
     <li><strong>Prioriteettiaste</strong>{{askare.prioriteetti}}</li>
     <li><strong>Luokka/Luokat</strong>{{askare.luokat}}</li>
     <li><strong>Lisäyspäivä:</strong> {{askare.added}}</li>
-  </ul>
-  <p>
+</ul>
+<p>
     {{askare.description}}
-  </p>
+</p>
 {% endblock %}

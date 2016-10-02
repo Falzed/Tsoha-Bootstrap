@@ -36,10 +36,26 @@ class Kayttaja extends BaseModel {
                 'id' => $row['id'],
                 'nimi' => $row['nimi'],
                 'email' => $row['email'],
-                'password' => $row['password'],
+                'password' => $row['password']
             ));
         }
         return $askare;
+    }
+
+    public static function autheticate($username, $password) {
+        $query = DB::connection()->prepare('SELECT * FROM Kayttaja WHERE nimi = :username AND password = :password LIMIT 1');
+        $query->execute(array('nimi' => $username, 'password' => $password));
+        $row = $query->fetch();
+        if ($row) {
+            return new Kayttaja(array(
+                'id' => $row['id'],
+                'nimi' => $row['nimi'],
+                'email' => $row['email'],
+                'password' => $row['password']
+            ));
+        } else {
+            return null;
+        }
     }
 
 }

@@ -3,22 +3,21 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/index.php</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/lib/view.php</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/views/suunnitelmat/askare.html</file>
             <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/create_tables.sh</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/views/suunnitelmat/rekisteroityminen.html</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/views/helloworld.html</file>
+            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/views/askare/askare.html</file>
+            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/views/askare/add.html</file>
+            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/controllers/askare_controller.php</file>
+            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/models/kayttaja.php</file>
             <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/sql/add_test_data.sql</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/views/suunnitelmat/kirjautuminen.html</file>
+            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/config/environment.sh</file>
             <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/sql/drop_tables.sql</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/views/suunnitelmat/muokkaus.html</file>
             <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/sql/create_tables.sql</file>
+            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/models/hello_world.php</file>
+            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/views/askare/muokkaus.html</file>
             <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/config/routes.php</file>
             <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/controllers/hello_world_controller.php</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/views/suunnitelmat/listaus.html</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/drop_tables.sh</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/views/base.html</file>
+            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/views/askare/listaus.html</file>
+            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/models/askare.php</file>
         </group>
     </open-files>
 </project-private>
