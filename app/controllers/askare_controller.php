@@ -15,7 +15,7 @@ class AskareController extends BaseController {
     }
 
     public static function muokkaus($id) {
-        $askare = Askare::find($id, get_user_logged_in()->id);
+        $askare = Askare::find($id, self::get_user_logged_in()->id);
         View::make('askare/muokkaus.html', array('attributes' => $askare));
     }
 
