@@ -9,19 +9,19 @@ class Askare extends BaseModel {
         $this->validators = array('validate_name', 'validate_priority');
     }
 
-    private static function classesToString($askareId) {
-        $query = DB::connection()->prepare('SELECT * FROM AskareittenLuokat WHERE id = :askareId');
-        $query->execute();
+    private static function classesToString($askare_id) {
+        $query = DB::connection()->prepare('SELECT * FROM AskareittenLuokat WHERE askare_id = :askare_id');
+        $query->execute(array('askare_id' => $askare_id));
         $rows = $query->fetchAll();
         $luokat_string = '';
         if (count($rows) > 1) {
             for ($i = 0; $i < count($rows) - 1; $i++) {
                 $luokat_string . $row['luokka_nimi'] . ', ';
             }
-            $luokat_string . $rows[count($rows) - 1]['luokka_nimi'];
+            $luokat_string . $rows[count($rows) - 1];
         }
         if (count($rows) == 1) {
-            $luokat_string . $rows[count($rows) - 1]['luokka_nimi'];
+            $luokat_string . $rows[count($rows) - 1];
         }
 
         return $luokat_string;
@@ -41,9 +41,9 @@ class Askare extends BaseModel {
         return $luokat_array;
     }
 
-    public static function kaikki($id) {
-        $query = DB::connection()->prepare('SELECT * FROM Askare WHERE kayttaja_id = :id');
-        $query->execute();
+    public static function kaikki($kayttaja_id) {
+        $query = DB::connection()->prepare('SELECT * FROM Askare WHERE kayttaja_id = :kayttaja_id');
+        $query->execute(array('kayttaja_id' => $kayttaja_id));
         $rows = $query->fetchAll();
         $askareet = array();
 
@@ -65,7 +65,7 @@ class Askare extends BaseModel {
 
     public static function find($id, $kayttaja_id) {
         $query = DB::connection()->prepare('SELECT * FROM Askare WHERE id = :id AND kayttaja_id = :kayttaja_id LIMIT 1');
-        $query->execute(array('id' => $id));
+        $query->execute(array('id' => $id, 'kayttaja_id' => $kayttaja_id));
         $row = $query->fetch();
 
         if ($row) {
@@ -120,11 +120,11 @@ class Askare extends BaseModel {
     }
 
     public function validate_name() {
-        return validate_string_length($this->nimi, 1);
+        return self::validate_string_length($this->nimi, 1);
     }
 
     public function validate_priority() {
-        return validatenumeric($this->prioriteetti);
+        return self::validate_numeric($this->prioriteetti);
     }
 
     public function validate_description() {
@@ -140,7 +140,7 @@ class Askare extends BaseModel {
                 . '| (04 | 06 | 09 | 11) - ([0-2][0-9] | 30)'
                 . '| 02-([0-1][0-9] | 2[0-9]))';
         
-        return validate_regex($regex, $this->added);
+        return self::validate_regex($regex, $this->added);
     }
     
         public function validate_luokat() {

@@ -14,8 +14,8 @@ $routes->get('/askareet', function() {
 $routes->get('/login', function() {
     UserController::login();
 });
-$routes->post('/handle_login', function() {
-    UserController::login($id);
+$routes->post('/login', function() {
+    UserController::handle_login();
 });
 $routes->get('/register', function() {
     HelloWorldController::rekisteroityminen();
@@ -32,9 +32,9 @@ $routes->post('/askare/:id/delete', function($id) {
 $routes->post('/askare', function() {
     AskareController::tallenna();
 });
-$routes->post('/askare/:id', function() {
-    AskareController::tallenna();
-});
+//$routes->post('/askare/:id', function() {
+//    AskareController::tallenna();
+//});
 $routes->get('/askare/add', function() {
     AskareController::uusi();
 });

@@ -3,8 +3,9 @@
 class AskareController extends BaseController {
 
     public static function listaus() {
-        $user = get_user_logged_in();
-        $askareet = Askare::kaikki($user->id);
+        $user = self::get_user_logged_in();
+        $id = $user->id;
+        $askareet = Askare::kaikki($id);
         View::make('askare/listaus.html', array('askareet' => $askareet));
     }
 

@@ -39,12 +39,12 @@ class Kayttaja extends BaseModel {
                 'password' => $row['password']
             ));
         }
-        return $askare;
+        return $kayttaja;
     }
 
-    public static function autheticate($username, $password) {
+    public static function authenticate($username, $password) {
         $query = DB::connection()->prepare('SELECT * FROM Kayttaja WHERE nimi = :username AND password = :password LIMIT 1');
-        $query->execute(array('nimi' => $username, 'password' => $password));
+        $query->execute(array('username' => $username, 'password' => $password));
         $row = $query->fetch();
         if ($row) {
             return new Kayttaja(array(

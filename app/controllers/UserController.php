@@ -8,7 +8,7 @@
 class UserController {
 
     public function login() {
-        View::make('kayttaja/login.html');
+        View::make('kayttaja/kirjautuminen.html');
     }
 
     public function handle_login() {
@@ -17,7 +17,7 @@ class UserController {
         $user = Kayttaja::authenticate($params['username'], $params['password']);
 
         if (!$user) {
-            View::make('kayttaja/login.html', array('error' => 'Väärä käyttäjätunnus tai salasana!', 'username' => $params['username']));
+            View::make('kayttaja/kirjautuminen.html', array('error' => 'Väärä käyttäjätunnus tai salasana!', 'username' => $params['username']));
         } else {
             $_SESSION['user'] = $user->id;
 

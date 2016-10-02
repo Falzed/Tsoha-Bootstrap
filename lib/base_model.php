@@ -22,7 +22,7 @@ class BaseModel {
 
         foreach ($this->validators as $validator) {
             // Kutsu validointimetodia tässä ja lisää sen palauttamat virheet errors-taulukkoon
-            $errors = array_merge(errors, $this->{$validator}());
+            $errors = array_merge($errors, $this->{$validator}());
         }
 
         return $errors;
@@ -30,11 +30,11 @@ class BaseModel {
 
     public function validate_string_length($string, $minimi) {
         $errors = array();
-        if (($string == '' || $string == null) && $minimi > 0) {
-            $errors[] = 'Nimi ei saa olla tyhjä!';
+        if (($string == '' || $string == null) && minimi>0) {
+            $errors[] = 'Merkkijono ei saa olla tyhjä!';
         }
         if (strlen($string) < $minimi) {
-            $errors[] = 'Nimen pituuden tulee olla vähintään' + $minimi + ' merkkiä!';
+            $errors[] = 'Merkkijonon pituuden tulee olla vähintään ' . $minimi . ' merkkiä!';
         }
 
         return $errors;

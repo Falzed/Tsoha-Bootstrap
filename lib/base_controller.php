@@ -6,7 +6,7 @@ class BaseController {
         // Toteuta kirjautuneen käyttäjän haku tähän
         if (isset($_SESSION['user'])) {
             $user_id = $_SESSION['user'];
-            $user = User::find($user_id);
+            $user = Kayttaja::find($user_id);
             return $user;
         }
 
