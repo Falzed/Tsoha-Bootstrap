@@ -82,29 +82,16 @@ class Askare extends BaseModel {
 
     public function tallenna($kayttaja_id) {
         $query = DB::connection()->prepare('INSERT INTO Askare (nimi, description, prioriteetti, added, kayttaja_id) VALUES (:nimi, :description, :prioriteetti, NOW(), :kayttaja_id) RETURNING id');
-        $luokat_temp = Askare::stringToClasses($this->luokat_string);
         $query->execute(array('nimi' => $this->nimi, 'description' => $this->description, 'prioriteetti' => $this->prioriteetti, 'kayttaja_id' => $kayttaja_id));
         $row = $query->fetch();
         $this->id = $row['id'];
-
-        foreach ($luokat_temp as $luokka) {
-            if (!Luokka::find($luokka->nimi)) {
-                $luokka->tallenna();
-            }
-            $askareitten_luokat = new AskareittenLuokat(array(
-                'askare_id' => $this->id,
-                'luokka_id' => $luokka->id,
-                'luokka_nimi' => $luokka->nimi
-            ));
-            $askareitten_luokat->tallenna();
-        }
 
         $query_luokka = Kint::trace();
         Kint::dump($row);
     }
 
     public function update() {
-        $query = DB::connection()->prepare('UPDATE Askare (nimi, description, prioriteetti, added, kayttaja_id) VALUES (:nimi, :description, :prioriteetti, :kayttaja_id, NOW()) RETURNING id');
+        $query = DB::connection()->prepare('UPDATE Askare (nimi, description, prioriteetti, kayttaja_id) VALUES (:nimi, :description, :prioriteetti, :kayttaja_id) RETURNING id');
         $luokat_temp = Askare::stringToClasses($this->luokat_string);
         $query->execute(array('nimi' => $this->nimi, 'description' => $this->description, 'prioriteetti' => $this->prioriteetti));
         $row = $query->fetch();

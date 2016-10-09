@@ -23,8 +23,8 @@ class LuokkaController extends BaseController {
     
     public static function uusi() {
         self::check_logged_in();
-        $luokat = Luokka::kaikki(self::get_user_logged_in()->id);
-        View::make('luokka/add.html', array('luokat' => $luokat));
+        $kaikki_luokat = Luokka::kaikki(self::get_user_logged_in()->id);
+        View::make('luokka/add.html', array('luokat' => $kaikki_luokat));
     }
 
     public static function tallenna() {

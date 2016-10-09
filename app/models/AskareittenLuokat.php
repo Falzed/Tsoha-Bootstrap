@@ -13,7 +13,7 @@
  */
 class AskareittenLuokat extends BaseModel {
 
-    public $askare_id, $luokka_id, $luokka_nimi;
+    public $askare_id, $luokka_id;
 
     public function __construct() {
         parent::__construct();
@@ -36,12 +36,9 @@ class AskareittenLuokat extends BaseModel {
         return $luokat;
     }
     public function tallenna() {
-//        $query = DB::connection()->prepare('INSERT INTO AskareittenLuokat (askare_id, luokka_id, luokka_nimi) VALUES (:askare_id, :luokka_id, :luokka_nimi RETURNING id');
-        $query = DB::connection()->prepare('INSERT INTO AskareittenLuokat (askare_id, luokka_id, luokka_nimi) VALUES (:askare_id, :luokka_id, :luokka_nimi');
-        $query->execute(array('askare_id' => $this->askare_id, 'luokka_id' => $this->luokka_id, 'luokka_nimi' => $this->luokka_nimi));
+        $query = DB::connection()->prepare('INSERT INTO AskareittenLuokat (askare_id, luokka_id) VALUES (:askare_id, :luokka_id');
+        $query->execute(array('askare_id' => $this->askare_id, 'luokka_id' => $this->luokka_id));
         $query->fetch();
-//        $row = $query->fetch();
-//        $this->id = $row['id'];
     }
 
 }

@@ -23,18 +23,14 @@
         <input type="text" name="prioriteetti" class="form-control" value="{{attributes.prioriteetti}}">
     </div>
 
-        <div class="form-group">
-            <label>Luokat</label>
-            <input type="text" name="luokat_string" class="form-control" value="{{attributes.luokat}}">
-        </div>
-<!--    <div class="form-group">
+    <div class="form-group">
         <label>Luokat</label>
         <select class="form-control" name="luokat[]" multiple="">
-            {% for luokka in luokat %}
-            <option value="{{luokka.id}}">{{luokka.name}}</option>
+            {% for luokka in kaikki_luokat %}
+                <option value="{{luokka.id}}">{{luokka.name}}</option>
             {% endfor %}
         </select>
-    </div>-->
+    </div>
 
     <div class="form-group">
         <label>Kuvaus</label>
