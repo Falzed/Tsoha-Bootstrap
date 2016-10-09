@@ -50,11 +50,11 @@ class AskareController extends BaseController {
 
         $errors = $askare->errors();
         if (count($errors) == 0) {
+            $askare->tallenna(self::get_user_logged_in()->id);
             foreach ($luokkien_idt as $luokan_id) {
                 $askareittenLuokat = new AskareittenLuokat(array('askare_id' => $askare->id, 'luokka_id' => $luokan_id));
                 $askareittenLuokat->tallenna(self::get_user_logged_in()->id);
             }
-            $askare->tallenna(self::get_user_logged_in()->id);
             Redirect::to('/askare/' . $askare->id, array('message' => 'Askare on lisätty muistilistaasi!'));
         } else {
             View::make('askare/add.html', array('errors' => $errors, 'attributes' => $attributes));
