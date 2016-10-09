@@ -2,35 +2,11 @@
 
 class Askare extends BaseModel {
 
-    public $id, $kayttaja_id, $nimi, $description, $prioriteetti, $added, $luokat_string;
+    public $id, $kayttaja_id, $nimi, $description, $prioriteetti, $added;
 
     public function __construct($attributes) {
         parent::__construct($attributes);
         $this->validators = array('validate_name', 'validate_priority');
-    }
-
-    private static function classesToString($askare_id, $kayttaja_id) {
-        $luokat = AskareittenLuokat::kaikki($askare_id);
-        $luokat_string = '';
-
-        foreach ($luokat as $luokka) {
-            $luokat_string = $luokat_string . $luokka->nimi;
-        }
-        return $luokat_string;
-    }
-
-    private static function stringToClasses($string) {
-        $luokat_array = array();
-        $uusiLuokka = '';
-        for ($i = 0; $i < strlen($string); $i++) {
-            if (substr($string, (-1) * strlen($string) + $i, 1) != ',' && substr($string, (-1) * strlen($string) + $i, 1) != ' ') {
-                $uusiLuokka . substr($string, (-1) * strlen($string) + $i, 1);
-            } else if (substr($string, (-1) * strlen($string) + $i, 1) != ',') {
-                $luokat_array[] = $uusiLuokka;
-                $uusiLuokka = '';
-            }
-        }
-        return $luokat_array;
     }
 
     public static function kaikki($kayttaja_id) {
@@ -47,9 +23,7 @@ class Askare extends BaseModel {
                 'nimi' => $row['nimi'],
                 'description' => $row['description'],
                 'prioriteetti' => $row['prioriteetti'],
-                'added' => $row['added'],
-//                'luokat_string' => $row['luokat']
-                'luokat_string' => Askare::classesToString($row['luokat'], $row['kayttaja_id'])
+                'added' => $row['added']
             ));
         }
 
@@ -60,10 +34,6 @@ class Askare extends BaseModel {
         $query = DB::connection()->prepare('SELECT * FROM Askare WHERE id = :id AND kayttaja_id = :kayttaja_id LIMIT 1');
         $query->execute(array('id' => $id, 'kayttaja_id' => $kayttaja_id));
         $row = $query->fetch();
-//        $askare_id = $id;
-//        $query_luokat = DB::connection()->prepare('SELECT * FROM AskareittenLuokat WHERE askare_id = :askare_id AND kayttaja_id = :kayttaja_id');
-//        $query_luokat->execute(array('askare_id'=>$askare_id, 'kayttaja_id' =>$kayttaja_id));
-//       $row_luokat = $query_luokat->fetch();
         $askare = null;
         if ($row) {
             $askare = new Askare(array(
@@ -72,10 +42,8 @@ class Askare extends BaseModel {
                 'nimi' => $row['nimi'],
                 'description' => $row['description'],
                 'prioriteetti' => $row['prioriteetti'],
-                'added' => $row['added'],
-//                'luokat_string' => $row['luokat'])
-                'luokat_string' =>Askare::classesToString($row['id'], $row['kayttaja_id']))
-            );
+                'added' => $row['added']
+            ));
         }
         return $askare;
     }

@@ -27,7 +27,7 @@
         <label>Luokat</label>
         <select class="form-control" name="luokat[]" multiple="">
             {% for luokka in kaikki_luokat %}
-                <option value="{{luokka.id}}">{{luokka.name}}</option>
+                <option value="{{luokka.id}}">{{luokka.nimi}}</option>
             {% endfor %}
         </select>
     </div>
