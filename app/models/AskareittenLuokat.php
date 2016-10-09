@@ -42,6 +42,28 @@ class AskareittenLuokat extends BaseModel {
         $row = $query->fetch();
         Kint::dump($row);
     }
+    
+    public function destroy() {
+        $query = DB::connection()->prepare('DELETE FROM AskareittenLuokat WHERE askare_id = :askare_id AND luokka_id = :luokka_id');
+        $query->execute(array('askare_id' => $this->askare_id, 'luokka_id' => $this->luokka_id));
+        $row = $query->fetch();
+        Kint::trace();
+        Kint::dump($row);
+    }
+    
+    public static function find($askare_id, $luokka_id) {
+        $query = DB::connection()->prepare('SELECT * FROM AskareittenLuokka WHERE askare_id = :askare_id AND luokka_id = :luokka_id LIMIT 1');
+        $query->execute(array('askare_id' => $askare_id, 'luokka_id' => $luokka_id));
+        $row = $query->fetch();
+        $askareittenLuokka = null;
+        if ($row) {
+            $luokka = new AskareittenLuokka(array(
+                'askare_id' => $row['askare_id'],
+                'luokka_id' => $row['luokka_id']
+            ));
+        }
+        return $askareittenLuokka;
+    }
     public function validate_ids() {
         if(!parent::validate_numeric($this->askare_id)) {
             return false;

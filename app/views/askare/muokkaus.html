@@ -24,10 +24,20 @@
         <label>Prioriteetti</label>
         <input type="text" name="prioriteetti" class="form-control" value="{{askare.prioriteetti}}">
     </div>
+    <div class="form-group">
+        <label>Poista luokat</label>
+        {% for luokka in luokat %}
+        <input type = "checkbox" name ="poistettava[]" id="poistettava" value="{{luokka.id}}"> {{luokka.nimi}} <br />
+        {% endfor %}
+    </div>
 
     <div class="form-group">
-        <label>Luokat</label>
-        <input type="text" name="luokat" class="form-control" value="{{askare.luokat_string}}">
+        <label>Lisää luokkia</label>
+        <select class="form-control" name="uudet_luokat[]" multiple="">
+            {% for luokka in $luokatJoihinEiKuulu %}
+            <option value="{{luokka.id}}">{{luokka.nimi}}</option>
+            {% endfor %}
+        </select>
     </div>
 
     <div class="form-group">

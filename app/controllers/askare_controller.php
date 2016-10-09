@@ -27,7 +27,15 @@ class AskareController extends BaseController {
     public static function muokkaus($id) {
         self::check_logged_in();
         $askare = Askare::find($id, self::get_user_logged_in()->id);
-        View::make('askare/muokkaus.html', array('attributes' => $askare));
+        $kaikki_luokat = Luokka::kaikki(self::get_user_logged_in()->id);
+        $luokat = AskareittenLuokat::kaikki($id);
+        $luokatJoihinEiKuulu = array();
+        foreach ($kaikki_luokat as $luokka) {
+            if (!in_array($luokka, $luokat)) {
+                $luokatJoihinEiKuulu[] = $luokka;
+            }
+        }
+        View::make('askare/muokkaus.html', array('attributes' => $askare, '$luokatJoihinEiKuulu' => $luokatJoihinEiKuulu, 'luokat' => $luokat));
     }
 
     public static function tallenna() {
@@ -64,7 +72,7 @@ class AskareController extends BaseController {
     public static function uusi() {
         self::check_logged_in();
         $kaikki_luokat = Luokka::kaikki(self::get_user_logged_in()->id);
-        View::make('askare/add.html', array('kaikki_luokat' =>$kaikki_luokat));
+        View::make('askare/add.html', array('kaikki_luokat' => $kaikki_luokat));
     }
 
     public static function update($id) {
@@ -73,11 +81,23 @@ class AskareController extends BaseController {
         $attributes = array(
             'nimi' => $params['nimi'],
             'description' => $params['description'],
-            'prioriteetti' => $params['prioriteetti'],
-            'luokat' => $params['luokat']
+            'prioriteetti' => $params['prioriteetti']
         );
         $askare = new Askare(array($attributes));
         $errors = $askare->errors();
+
+        $poistettavat = $params['poistettava'];
+        foreach ($poistettavat as $poistettava) {
+            $askareittenLuokat = AskareittenLuokat::find($askare->id, $poistettava);
+            $askareittenLuokat->destroy();
+        }
+        
+        $lisattavat = $params['uudet_luokat'];
+        
+        foreach ($lisattavat as $lisattava) {
+            $askareittenLuokat = new AskareittenLuokat(array('askare_id' => $askare->id, 'luokka_id'=>$lisattava));
+            $askareittenLuokat->tallenna(self::get_user_logged_in()->id);
+        }
 
         if (count($errors) == 0) {
             $askare->update();

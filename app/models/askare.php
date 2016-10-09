@@ -75,7 +75,6 @@ class Askare extends BaseModel {
         $query_luokat = DB::connection()->prepare('DELETE FROM AskareittenLuokat WHERE askare_id = :askare_id');
         $query_luokat->execute(array('askare_id' => $askare_id));
         $query = DB::connection()->prepare('DELETE FROM Askare WHERE id=:id RETURNING id');
-        $luokat_temp = Askare::stringToClasses($this->luokat_string);
         $query->execute(array('id' => $this->id));
         $row = $query->fetch();
         $this->id = $row['id'];
