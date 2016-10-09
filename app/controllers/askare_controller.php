@@ -45,15 +45,14 @@ class AskareController extends BaseController {
         ));
         Kint::dump($params);
 
-        $luokkien_idt = $params['luokat[]'];
-        $luokat = array();
+//        $luokkien_idt_apu = $params['luokat'];
+        $luokkien_idt = $params['luokat'];
 
         $errors = $askare->errors();
         if (count($errors) == 0) {
-            foreach ($luokkien_id as $luokan_id) {
-                $askareittenLuokat = new AskareittenLuokat(array('askare_id' => $askare->id,
-                    'luokka_id' => $luokan_id));
-                $askareittenLuokat->tallenna();
+            foreach ($luokkien_idt as $luokan_id) {
+                $askareittenLuokat = new AskareittenLuokat(array('askare_id' => $askare->id, 'luokka_id' => $luokan_id));
+                $askareittenLuokat->tallenna(self::get_user_logged_in()->id);
             }
             $askare->tallenna(self::get_user_logged_in()->id);
             Redirect::to('/askare/' . $askare->id, array('message' => 'Askare on lisätty muistilistaasi!'));

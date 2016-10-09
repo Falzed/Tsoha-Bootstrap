@@ -15,8 +15,9 @@ class AskareittenLuokat extends BaseModel {
 
     public $askare_id, $luokka_id;
 
-    public function __construct() {
-        parent::__construct();
+    public function __construct($attributes) {
+        parent::__construct($attributes);
+        $this->validators = array('validate_ids');
     }
     
     public static function kaikki($askare_id) {
@@ -35,10 +36,19 @@ class AskareittenLuokat extends BaseModel {
 
         return $luokat;
     }
-    public function tallenna() {
-        $query = DB::connection()->prepare('INSERT INTO AskareittenLuokat (askare_id, luokka_id) VALUES (:askare_id, :luokka_id');
-        $query->execute(array('askare_id' => $this->askare_id, 'luokka_id' => $this->luokka_id));
-        $query->fetch();
+    public function tallenna($kayttaja_id) {
+        $query = DB::connection()->prepare('INSERT INTO AskareittenLuokat (askare_id, luokka_id, kayttaja_id) VALUES (:askare_id, :luokka_id, :kayttaja_id');
+        $query->execute(array('askare_id' => $this->askare_id, 'luokka_id' => $this->luokka_id, 'kayttaja_id' => $kayttaja_id));
+        $row = $query->fetch();
+        Kint::dump($row);
     }
-
+    public function validate_ids() {
+        if(!parent::validate_numeric($this->askare_id)) {
+            return false;
+        }
+        if(!parent::validate_numeric($this->luokka_id)) {
+            return false;
+        }
+        return true;
+    }
 }
