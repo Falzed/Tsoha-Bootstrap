@@ -11,7 +11,7 @@
  *
  * @author Oskari
  */
-class Luokka {
+class Luokka extends BaseModel{
 
     public $id, $nimi, $kayttajan_id;
 
@@ -41,9 +41,10 @@ class Luokka {
     }
     
     public static function findKaikkiKayttajan($kayttajan_id) {
-        $query = DB::connection()->prepare('SELECT * FROM Luokka WHERE $kayttajan_id = :$kayttajan_id');
-        $query->execute(array('nimi' => $kayttajan_id));
+        $query = DB::connection()->prepare('SELECT * FROM Luokka WHERE kayttajan_id = :kayttajan_id');
+        $query->execute(array('kayttajan_id' => $kayttajan_id));
         $rows = $query->fetchAll();
+        $luokat = array();
         foreach ($rows as $row) {
             $luokat[] = new Askare(array(
                 'id' => $row['id'],

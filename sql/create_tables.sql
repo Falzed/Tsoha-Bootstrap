@@ -17,7 +17,8 @@ CREATE TABLE Askare(
 
 CREATE TABLE Luokka(
     id SERIAL PRIMARY KEY,
-    nimi varchar(50)
+    nimi varchar(50),
+    kayttajan_id INTEGER REFERENCES Kayttaja(id)
 );
 
 CREATE TABLE LuokanAlaluokat(

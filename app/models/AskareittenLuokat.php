@@ -28,8 +28,8 @@ class AskareittenLuokat extends BaseModel {
         foreach ($rows as $row) {
 
             $luokat[] = new Luokka(array(
-                'id' => $row['id'],
-                'nimi' => $row['nimi'],
+                'id' => $row['luokka_id'],
+                'nimi' => $row['luokka_nimi'],
             ));
         }
 
