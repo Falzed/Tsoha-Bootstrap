@@ -45,3 +45,10 @@ $routes->get('/askare/:id', function($id) {
 $routes->post('/logout', function(){
   UserController::logout();
 });
+
+$routes->get('/luokka/add', function(){
+  LuokkaController::uusi();
+});
+$routes->post('/luokka', function(){
+  LuokkaController::tallenna();
+});

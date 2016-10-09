@@ -11,26 +11,26 @@
  *
  * @author Oskari
  */
-class Luokka extends BaseModel{
+class Luokka extends BaseModel {
 
     public $id, $nimi, $kayttajan_id;
 
     public function __construct($attributes) {
         parent::__construct($attributes);
     }
-    
+
     public function tallenna() {
         $query = DB::connection()->prepare('INSERT INTO Luokka (nimi, kayttajan_id) VALUES (:nimi, :kayttajan_id RETURNING id');
         $query->execute(array('nimi' => $this->nimi, 'kayttajan_id' => $this->kayttajan_id));
         $row = $query->fetch();
         $this->id = $row['id'];
     }
-    
+
     public static function find($nimi) {
         $query = DB::connection()->prepare('SELECT * FROM Luokka WHERE nimi = :nimi LIMIT 1');
         $query->execute(array('nimi' => $nimi));
         $row = $query->fetch();
-        if($row) {
+        if ($row) {
             $luokka = new Luokka(array(
                 'id' => $row['id'],
                 'nimi' => $row['nimi'],
@@ -39,7 +39,7 @@ class Luokka extends BaseModel{
         }
         return $luokka;
     }
-    
+
     public static function findKaikkiKayttajan($kayttajan_id) {
         $query = DB::connection()->prepare('SELECT * FROM Luokka WHERE kayttajan_id = :kayttajan_id');
         $query->execute(array('kayttajan_id' => $kayttajan_id));
@@ -54,6 +54,10 @@ class Luokka extends BaseModel{
         }
 
         return $luokat;
+    }
+
+    public function validate_name() {
+        return self::validate_string_length($this->nimi, 1);
     }
 
 }
