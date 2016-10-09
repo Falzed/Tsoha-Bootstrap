@@ -37,7 +37,7 @@ class AskareittenLuokat extends BaseModel {
         return $luokat;
     }
     public function tallenna($kayttaja_id) {
-        $query = DB::connection()->prepare('INSERT INTO AskareittenLuokat (askare_id, luokka_id, kayttaja_id) VALUES (:askare_id, :luokka_id, :kayttaja_id');
+        $query = DB::connection()->prepare('INSERT INTO AskareittenLuokat (askare_id, luokka_id, kayttaja_id) VALUES (:askare_id, :luokka_id, :kayttaja_id)');
         $query->execute(array('askare_id' => $this->askare_id, 'luokka_id' => $this->luokka_id, 'kayttaja_id' => $kayttaja_id));
         $row = $query->fetch();
         Kint::dump($row);
