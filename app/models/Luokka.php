@@ -17,10 +17,11 @@ class Luokka extends BaseModel {
 
     public function __construct($attributes) {
         parent::__construct($attributes);
+        $this->validators = array('validate_name');
     }
 
     public function tallenna() {
-        $query = DB::connection()->prepare('INSERT INTO Luokka (nimi, kayttajan_id) VALUES (:nimi, :kayttajan_id RETURNING id');
+        $query = DB::connection()->prepare('INSERT INTO Luokka (nimi, kayttajan_id) VALUES (:nimi, :kayttajan_id) RETURNING id');
         $query->execute(array('nimi' => $this->nimi, 'kayttajan_id' => $this->kayttajan_id));
         $row = $query->fetch();
         $this->id = $row['id'];

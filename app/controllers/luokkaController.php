@@ -15,16 +15,17 @@ class LuokkaController extends BaseController{
 
     public static function uusi() {
         self::check_logged_in();
-        $luokat = Luokka::findKaikkiKayttajan(get_user_logged_in());
+        $luokat = Luokka::findKaikkiKayttajan(self::get_user_logged_in()->id);
         View::make('luokka/add.html', array('luokat' => $luokat));
     }
     
     public static function tallenna() {
         self::check_logged_in();
+        $kayttajan_id = self::get_user_logged_in()->id;
         $params = $_POST;
         $attributes = array(
             'nimi' => $params['nimi'],
-            'kayttajan_id' => $params['kayttajan_id']
+            'kayttajan_id' => $kayttajan_id
         );
         $luokka = new Luokka($params);
         Kint::dump($params);
