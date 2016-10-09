@@ -19,7 +19,7 @@ class LuokanAlaluokat extends BaseModel {
     }
     
     public static function kaikkiAlaluokat($ylaluokan_id) {
-        $query = DB::connection()->prepare('SELECT * FROM LuokanAlaluokat WHERE ylaluokan_id = :ylaluokan_id');
+        $query = DB::connection()->prepare('SELECT * FROM Luokka INNER JOIN LuokanAlaluokat ON alaluokan_id = id WHERE ylaluokan_id = :ylaluokan_id');
         $query->execute(array('ylaluokan_id' =>  $ylaluokan_id));
         $rows = $query->fetchAll();
         $alaluokat = array();
@@ -36,12 +36,12 @@ class LuokanAlaluokat extends BaseModel {
     }
     
     public static function findYlaluokka($alaluokan_id) {
-        $query = DB::connection()->prepare('SELECT * FROM Luokka WHERE alaluokan_id = :alaluokan_id LIMIT 1');
+        $query = DB::connection()->prepare('SELECT * FROM Luokka INNER JOIN LuokanAlaluokat ON alaluokan_id = id WHERE alaluokan_id = :alaluokan_id LIMIT 1');
         $query->execute(array('alaluokan_id' => $alaluokan_id));
         $row = $query->fetch();
         if($row) {
             $ylaluokka = new Luokka(array(
-                'id' => $row['id'],
+                'id' => $row['ylaluokan_id'],
                 'nimi' => $row['nimi']
             ));
         }
