@@ -21,7 +21,7 @@ class UserController {
         } else {
             $_SESSION['user'] = $user->id;
 
-            Redirect::to('/', array('message' => 'Tervetuloa takaisin ' . $user->nimi . '!'));
+            Redirect::to('/askareet', array('message' => 'Tervetuloa takaisin ' . $user->nimi . '!'));
         }
     }
 
