@@ -64,7 +64,8 @@ class AskareController extends BaseController {
 
     public static function uusi() {
         self::check_logged_in();
-        View::make('askare/add.html');
+        $kaikki_luokat = Luokka::kaikki(self::get_user_logged_in()->id);
+        View::make('askare/add.html', array('kaikki_luokat' =>$kaikki_luokat));
     }
 
     public static function update($id) {
