@@ -20,6 +20,11 @@ CREATE TABLE Luokka(
     nimi varchar(50)
 );
 
+CREATE TABLE LuokanAlaluokat(
+    ylaluokan_id INTEGER REFERENCES Luokka(id),
+    alaluokan_id INTEGER REFERENCES Luokka(id)
+);
+
 CREATE TABLE AskareittenLuokat(
     askare_id INTEGER REFERENCES Askare(id),
     luokka_id INTEGER REFERENCES Luokka(id),
