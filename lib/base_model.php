@@ -30,7 +30,7 @@ class BaseModel {
 
     public function validate_string_length($string, $minimi) {
         $errors = array();
-        if (($string == '' || $string == null) && minimi>0) {
+        if (($string == '' || $string == null) && $minimi>0) {
             $errors[] = 'Merkkijono ei saa olla tyhjä!';
         }
         if (strlen($string) < $minimi) {

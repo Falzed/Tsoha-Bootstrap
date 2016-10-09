@@ -34,7 +34,7 @@
     <div class="form-group">
         <label>Lisää luokkia</label>
         <select class="form-control" name="uudet_luokat[]" multiple="">
-            {% for luokka in $luokatJoihinEiKuulu %}
+            {% for luokka in luokatJoihinEiKuulu %}
             <option value="{{luokka.id}}">{{luokka.nimi}}</option>
             {% endfor %}
         </select>
