@@ -27,7 +27,7 @@ class LuokanAlaluokat extends BaseModel {
         foreach ($rows as $row) {
 
             $alaluokat[] = new Luokka(array(
-                'id' => $row['id'],
+                'id' => $row['alaluokan_id'],
                 'nimi' => $row['nimi'],
             ));
         }

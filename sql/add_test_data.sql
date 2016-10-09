@@ -2,9 +2,9 @@ INSERT INTO Kayttaja (nimi, email, password) VALUES ('Matti', 'matti@gmail.com',
 INSERT INTO Kayttaja (nimi, email, password) VALUES ('Tuomo', 'tuomo@gmail.com', 'salis');
 INSERT INTO Kayttaja (nimi, email, password) VALUES ('admin', 'admin@fakemail.com', 'admin');
 INSERT INTO Askare (nimi, kayttaja_id, description, prioriteetti, luokat, added) VALUES ('X', '1', 'blah blah blah', 5, '1', NOW());
-INSERT INTO Luokka (nimi) VALUES ('YlaLuokkaTest');
-INSERT INTO Luokka (nimi) VALUES ('AlaLuokkaTest1');
-INSERT INTO Luokka (nimi) VALUES ('AlaLuokkaTest2');
+INSERT INTO Luokka (nimi, kayttajan_id) VALUES ('YlaLuokkaTest', 1);
+INSERT INTO Luokka (nimi, kayttajan_id) VALUES ('AlaLuokkaTest1', 1);
+INSERT INTO Luokka (nimi, kayttajan_id) VALUES ('AlaLuokkaTest2', 1);
 INSERT INTO AskareittenLuokat (askare_id, luokka_id, kayttaja_id, luokka_nimi) VALUES (1, 1, 1, 'YlaLuokkaTest');
 INSERT INTO LuokanAlaluokat (ylaluokan_id, alaluokan_id) VALUES (1, 2);
 INSERT INTO LuokanAlaluokat (ylaluokan_id, alaluokan_id) VALUES (1, 3);

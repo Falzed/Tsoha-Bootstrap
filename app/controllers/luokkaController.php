@@ -32,8 +32,7 @@ class LuokkaController extends BaseController {
         $kayttajan_id = self::get_user_logged_in()->id;
         $params = $_POST;
         $attributes = array(
-            'nimi' => $params['nimi'],
-            'kayttajan_id' => $kayttajan_id
+            'nimi' => $params['nimi']
         );
         $luokka = new Luokka($params);
         Kint::dump($params);
@@ -50,7 +49,8 @@ class LuokkaController extends BaseController {
     public static function luokka($id) {
         self::check_logged_in();
         $luokka = Luokka::find($id, self::get_user_logged_in()->id);
-        View::make('luokka/luokka.html', array('luokka' => luokka));
+        $alaluokat = LuokanAlaluokat::kaikkiAlaluokat($id);
+        View::make('luokka/luokka.html', array('luokka' => $luokka, 'alaluokat' => $alaluokat));
     }
 
     public static function update($id) {

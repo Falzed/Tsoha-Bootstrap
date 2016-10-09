@@ -20,9 +20,9 @@ class Luokka extends BaseModel {
         $this->validators = array('validate_name');
     }
 
-    public function tallenna() {
+    public function tallenna($kayttajan_id) {
         $query = DB::connection()->prepare('INSERT INTO Luokka (nimi, kayttajan_id) VALUES (:nimi, :kayttajan_id) RETURNING id');
-        $query->execute(array('nimi' => $this->nimi, 'kayttajan_id' => $this->kayttajan_id));
+        $query->execute(array('nimi' => $this->nimi, 'kayttajan_id' => $kayttajan_id));
         $row = $query->fetch();
         $this->id = $row['id'];
     }
@@ -39,8 +39,9 @@ class Luokka extends BaseModel {
 
     public static function find($id, $kayttajan_id) {
         $query = DB::connection()->prepare('SELECT * FROM Luokka WHERE id = :id AND kayttajan_id = :kayttajan_id LIMIT 1');
-        $query->execute(array('id' => $id));
+        $query->execute(array('id' => $id, 'kayttajan_id' => $kayttajan_id));
         $row = $query->fetch();
+        $luokka = null;
         if ($row) {
             $luokka = new Luokka(array(
                 'id' => $row['id'],

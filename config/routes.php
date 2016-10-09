@@ -55,10 +55,10 @@ $routes->get('/luokka/add', function(){
 $routes->post('/luokka', function(){
   LuokkaController::tallenna();
 });
-$routes->get('/luokka/:id', function(){
+$routes->get('/luokka/:id', function($id){
   LuokkaController::luokka($id);
 });
-$routes->get('/luokka/:id/edit', function(){
+$routes->get('/luokka/:id/edit', function($id){
   LuokkaController::muokkaus($id);
 });
 $routes->post('/luokka/:id/edit', function($id) {
