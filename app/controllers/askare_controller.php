@@ -20,7 +20,8 @@ class AskareController extends BaseController {
     public static function askare($id) {
         self::check_logged_in();
         $askare = Askare::find($id, self::get_user_logged_in()->id);
-        View::make('askare/askare.html', array('askare' => $askare));
+        $luokat = AskareittenLuokat::kaikki($id);
+        View::make('askare/askare.html', array('askare' => $askare, 'luokat' => $luokat));
     }
 
     public static function muokkaus($id) {

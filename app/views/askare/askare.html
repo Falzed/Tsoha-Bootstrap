@@ -9,8 +9,13 @@
 
 <ul>
     <li><strong>Prioriteettiaste</strong>{{askare.prioriteetti}}</li>
-    <li><strong>Luokka/Luokat</strong>{{askare.luokat_string}}</li>
     <li><strong>Lisäyspäivä:</strong> {{askare.added}}</li>
+</ul>
+<h2>Luokat</h2>
+<ul>
+    {% for luokka in luokat %}
+    <li><a href = "{{base_path}}/luokka/{{luokka.id}}">{{luokka.nimi}}</a></li>
+    {% endfor %}
 </ul>
 <p>
     {{askare.description}}
