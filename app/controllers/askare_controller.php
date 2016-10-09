@@ -11,7 +11,7 @@ class AskareController extends BaseController {
         
         foreach ($askareet as $askare) {
             $askareenLuokat = array();
-            $askareenLuokat[] = Luokka::findKaikkiKayttajan($askare->kayttaja_id);
+            $askareenLuokat[] = Luokka::kaikki($askare->kayttaja_id);
             $askareittenLuokat[] = $askareenLuokat;
         }
         View::make('askare/listaus.html', array('askareet' => $askareet, 'askareittenLuokat' => $askareittenLuokat));

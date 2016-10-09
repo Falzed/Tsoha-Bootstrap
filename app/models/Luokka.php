@@ -51,36 +51,21 @@ class Luokka extends BaseModel {
         }
         return $luokka;
     }
+
     public static function kaikki($kayttajan_id) {
         $query = DB::connection()->prepare('SELECT * FROM Luokka WHERE kayttajan_id = :kayttajan_id');
-        $query->execute(array('id' => $id, 'kayttajan_id' => $kayttajan_id));
-        $rows = $query->fetch();
-        $luokka = array();
+        $query->execute(array('kayttajan_id' => $kayttajan_id));
+        $rows = $query->fetchAll();
+        $luokat = array();
         foreach ($rows as $row) {
-            $luokka[] = new Luokka(array(
+            $luokat[] = new Askare(array(
                 'id' => $row['id'],
                 'nimi' => $row['nimi'],
                 'kayttajan_id' => $row['kayttajan_id']
             ));
         }
-        return $luokka;
+        return $luokat;
     }
-
-//    public static function findKaikkiKayttajan($kayttajan_id) {
-//        $query = DB::connection()->prepare('SELECT * FROM Luokka WHERE kayttajan_id = :kayttajan_id');
-//        $query->execute(array('kayttajan_id' => $kayttajan_id));
-//        $rows = $query->fetchAll();
-//        $luokat = array();
-//        foreach ($rows as $row) {
-//            $luokat[] = new Askare(array(
-//                'id' => $row['id'],
-//                'nimi' => $row['nimi'],
-//                'kayttajan_id' => $row['kayttajan_id']
-//            ));
-//        }
-//
-//        return $luokat;
-//    }
 
     public function validate_name() {
         return self::validate_string_length($this->nimi, 1);

@@ -5,6 +5,11 @@ INSERT INTO Askare (nimi, kayttaja_id, description, prioriteetti, luokat, added)
 INSERT INTO Luokka (nimi, kayttajan_id) VALUES ('YlaLuokkaTest', 1);
 INSERT INTO Luokka (nimi, kayttajan_id) VALUES ('AlaLuokkaTest1', 1);
 INSERT INTO Luokka (nimi, kayttajan_id) VALUES ('AlaLuokkaTest2', 1);
+INSERT INTO Luokka (nimi, kayttajan_id) VALUES ('YlaLuokkaTestB', 1);
+INSERT INTO Luokka (nimi, kayttajan_id) VALUES ('AlaLuokkaTestB1', 1);
+INSERT INTO Luokka (nimi, kayttajan_id) VALUES ('AlaLuokkaTestB2', 1);
 INSERT INTO AskareittenLuokat (askare_id, luokka_id, kayttaja_id, luokka_nimi) VALUES (1, 1, 1, 'YlaLuokkaTest');
 INSERT INTO LuokanAlaluokat (ylaluokan_id, alaluokan_id) VALUES (1, 2);
 INSERT INTO LuokanAlaluokat (ylaluokan_id, alaluokan_id) VALUES (1, 3);
+INSERT INTO LuokanAlaluokat (ylaluokan_id, alaluokan_id) VALUES (4, 5);
+INSERT INTO LuokanAlaluokat (ylaluokan_id, alaluokan_id) VALUES (4, 6);
