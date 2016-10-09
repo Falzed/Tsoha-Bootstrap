@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Description of UserController
+ * Hoitaa sisäänkirjautumisen.
  *
  * @author Oskari
  */

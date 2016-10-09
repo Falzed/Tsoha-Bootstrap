@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Hoitaa askareitten näyttämisen, lisäämisen, muokkaamisen ja poistamisen.
+ *
+ * @author Oskari Kulmala
+ */
 class AskareController extends BaseController {
 
     public static function listaus() {
@@ -9,6 +14,7 @@ class AskareController extends BaseController {
         $askareet = Askare::kaikki($id);
         $askareittenLuokat = array();
 
+        //refaktoroi myöhemmin omaan kontrolleriin
         foreach ($askareet as $askare) {
             $askareenLuokat = array();
             $askareenLuokat[] = Luokka::kaikki($askare->kayttaja_id);
@@ -59,6 +65,7 @@ class AskareController extends BaseController {
         $errors = $askare->errors();
         if (count($errors) == 0) {
             $askare->tallenna(self::get_user_logged_in()->id);
+            //refaktoroi myöhemmin omaan kontrolleriin
             foreach ($luokkien_idt as $luokan_id) {
                 $askareittenLuokat = new AskareittenLuokat(array('askare_id' => $askare->id, 'luokka_id' => $luokan_id));
                 $askareittenLuokat->tallenna(self::get_user_logged_in()->id);
@@ -86,18 +93,18 @@ class AskareController extends BaseController {
         $askare = new Askare(array($attributes));
         $errors = $askare->errors();
 
+        //refaktoroi myöhemmin omaan kontrolleriin
         $poistettavat = $params['poistettava'];
         foreach ($poistettavat as $poistettava) {
             $askareittenLuokat = AskareittenLuokat::find($askare->id, $poistettava);
             $askareittenLuokat->destroy();
         }
-        
         $lisattavat = $params['uudet_luokat'];
-        
         foreach ($lisattavat as $lisattava) {
-            $askareittenLuokat = new AskareittenLuokat(array('askare_id' => $askare->id, 'luokka_id'=>$lisattava));
+            $askareittenLuokat = new AskareittenLuokat(array('askare_id' => $askare->id, 'luokka_id' => $lisattava));
             $askareittenLuokat->tallenna(self::get_user_logged_in()->id);
         }
+        
 
         if (count($errors) == 0) {
             $askare->update();

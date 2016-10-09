@@ -70,3 +70,6 @@ $routes->post('/luokka/:id/delete', function($id) {
 $routes->post('/luokka', function() {
     LuokkaController::tallenna();
 });
+$routes->post('/luokat', function() {
+    LuokkaController::listaus();
+});

@@ -1,4 +1,9 @@
 <?php
+/**
+ * Malli käyttäjälle.
+ *
+ * @author Oskari Kulmala
+ */
 
 class Kayttaja extends BaseModel {
 

@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * Malli askareelle.
+ *
+ * @author Oskari Kulmala
+ */
 class Askare extends BaseModel {
 
     public $id, $kayttaja_id, $nimi, $description, $prioriteetti, $added;

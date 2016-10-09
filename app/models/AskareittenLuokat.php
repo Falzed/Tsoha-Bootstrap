@@ -1,15 +1,8 @@
 <?php
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of AskareittenLuokat
+ * Malli taululle johon askareitten ja luokkien relaatiot tallennetaan.
  *
- * @author oskari
+ * @author Oskari Kulmala
  */
 class AskareittenLuokat extends BaseModel {
 
