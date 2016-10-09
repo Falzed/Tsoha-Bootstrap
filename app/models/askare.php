@@ -10,20 +10,12 @@ class Askare extends BaseModel {
     }
 
     private static function classesToString($askare_id, $kayttaja_id) {
-        $query = DB::connection()->prepare('SELECT * FROM AskareittenLuokat WHERE askare_id = :askare_id AND kayttaja_id = :kayttaja_id');
-        $query->execute(array('askare_id' => $askare_id, 'kayttaja_id' => $kayttaja_id));
-        $rows = $query->fetchAll();
+        $luokat = AskareittenLuokat::kaikki($askare_id);
         $luokat_string = '';
-        if (count($rows) > 1) {
-            for ($i = 0; $i < count($rows) - 1; $i++) {
-                $luokat_string = $luokat_string . $rows['luokka_nimi'] . ', ';
-            }
-            $luokat_string = $luokat_string . $rows[count($rows) - 1];
-        }
-        if (count($rows) == 1) {
-            $luokat_string = $luokat_string . $rows[count($rows) - 1];
-        }
 
+        foreach ($luokat as $luokka) {
+            $luokat_string = $luokat_string . $luokka->nimi;
+        }
         return $luokat_string;
     }
 
@@ -56,8 +48,8 @@ class Askare extends BaseModel {
                 'description' => $row['description'],
                 'prioriteetti' => $row['prioriteetti'],
                 'added' => $row['added'],
-                'luokat_string' => $row['luokat']
-//                'luokat_string' => Askare::classesToString($row['luokat'], $row['kayttaja_id'])
+//                'luokat_string' => $row['luokat']
+                'luokat_string' => Askare::classesToString($row['luokat'], $row['kayttaja_id'])
             ));
         }
 
@@ -81,9 +73,9 @@ class Askare extends BaseModel {
                 'description' => $row['description'],
                 'prioriteetti' => $row['prioriteetti'],
                 'added' => $row['added'],
-                'luokat_string' => $row['luokat'])
-//                'luokat_string' =>Askare::classesToString($row['id'], $row['kayttaja_id']))
-                );
+//                'luokat_string' => $row['luokat'])
+                'luokat_string' =>Askare::classesToString($row['id'], $row['kayttaja_id']))
+            );
         }
         return $askare;
     }
@@ -95,11 +87,22 @@ class Askare extends BaseModel {
         $row = $query->fetch();
         $this->id = $row['id'];
 
+        foreach ($luokat_temp as $luokka) {
+            if (!Luokka::find($luokka->nimi)) {
+                $luokka->tallenna();
+            }
+            $askareitten_luokat = new AskareittenLuokat(array(
+                'askare_id' => $this->id,
+                'luokka_id' => $luokka->id,
+                'luokka_nimi' => $luokka->nimi
+            ));
+            $askareitten_luokat->tallenna();
+        }
 
-        Kint::trace();
+        $query_luokka = Kint::trace();
         Kint::dump($row);
     }
-    
+
     public function update() {
         $query = DB::connection()->prepare('UPDATE Askare (nimi, description, prioriteetti, added, kayttaja_id) VALUES (:nimi, :description, :prioriteetti, :kayttaja_id, NOW()) RETURNING id');
         $luokat_temp = Askare::stringToClasses($this->luokat_string);
@@ -111,7 +114,7 @@ class Askare extends BaseModel {
         Kint::trace();
         Kint::dump($row);
     }
-    
+
     public function destroy() {
         $askare_id = $this->id;
         $query_luokat = DB::connection()->prepare('DELETE FROM AskareittenLuokat WHERE askare_id = :askare_id');
@@ -142,16 +145,16 @@ class Askare extends BaseModel {
 
     public function validate_added() {
         //ei tarkista karkauspäiviä
-        
+
         $regex = '[0-9]{4}-'
                 . '((01 | 03 | 05 | 07 | 08 | 10 | 12) - ([0-2][0-9] | 3[0-1])'
                 . '| (04 | 06 | 09 | 11) - ([0-2][0-9] | 30)'
                 . '| 02-([0-1][0-9] | 2[0-9]))';
-        
+
         return self::validate_regex($regex, $this->added);
     }
-    
-        public function validate_luokat() {
+
+    public function validate_luokat() {
 //        askareella ei välttämättä tarvitse olla yhtään luokkaa
         return array();
     }

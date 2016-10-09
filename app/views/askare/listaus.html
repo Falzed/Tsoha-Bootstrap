@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 {% extends "base.html" %}
 {% import "macros/forms.html" as forms %}
 {% block content %}
@@ -27,15 +28,24 @@
 
     <tbody>
         {%for askare in askareet %}
+
         <tr>
             <td><a href="{{base_path}}/askare/{{askare.id}}">{{askare.nimi}}</a></td>
             <td>{{askare.description}}</td>
             <td>{{askare.prioriteetti}}</td>
-            <td>{{askare.luokat_string}}</td>
+            <td>
+                {%for askareenLuokat in askareittenLuokat %}
+                    {%for luokka in askareenLuokat %}
+                        {{luokka.nimi}}
+                        
+                    {%endfor %}
+                {%endfor %}
+            </td>
+            <!--<td>{{askare.luokat_string}}</td>-->
             <td>{{askare.added}}</td>
             <td>{{forms.destroy_button("#{base_path}/askare/#{askare.id}/delete")}}</td>
             <td><a href ="{{base_path}}/askare/{{askare.id}}/edit"<button class="btn btn-danger">{{text|default('Muokkaa')}}</button></a></td>
-<!--            <td>{{forms.edit_button("#{base_path}/askare/#{askare.id}/edit")}}</td>-->
+            <!--            <td>{{forms.edit_button("#{base_path}/askare/#{askare.id}/edit")}}</td>-->
         </tr>
         {% endfor %}
     </tbody>

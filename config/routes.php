@@ -41,3 +41,7 @@ $routes->get('/askare/add', function() {
 $routes->get('/askare/:id', function($id) {
     AskareController::askare($id);
 });
+
+$routes->post('/logout', function(){
+  UserController::logout();
+});

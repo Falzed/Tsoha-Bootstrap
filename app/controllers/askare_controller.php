@@ -3,23 +3,34 @@
 class AskareController extends BaseController {
 
     public static function listaus() {
+        self::check_logged_in();
         $user = self::get_user_logged_in();
         $id = $user->id;
         $askareet = Askare::kaikki($id);
-        View::make('askare/listaus.html', array('askareet' => $askareet));
+        $askareittenLuokat = array();
+        
+        foreach ($askareet as $askare) {
+            $askareenLuokat = array();
+            $askareenLuokat[] = Luokka::findKaikkiKayttajan($askare->kayttaja_id);
+            $askareittenLuokat[] = $askareenLuokat;
+        }
+        View::make('askare/listaus.html', array('askareet' => $askareet, 'askareittenLuokat' => $askareittenLuokat));
     }
 
     public static function askare($id) {
+        self::check_logged_in();
         $askare = Askare::find($id, self::get_user_logged_in()->id);
         View::make('askare/askare.html', array('askare' => $askare));
     }
 
     public static function muokkaus($id) {
+        self::check_logged_in();
         $askare = Askare::find($id, self::get_user_logged_in()->id);
         View::make('askare/muokkaus.html', array('attributes' => $askare));
     }
 
     public static function tallenna() {
+        self::check_logged_in();
         $params = $_POST;
         $attributes = array(
             'nimi' => $params['nimi'],
@@ -45,11 +56,12 @@ class AskareController extends BaseController {
     }
 
     public static function uusi() {
-
+        self::check_logged_in();
         View::make('askare/add.html');
     }
     
     public static function update($id) {
+        self::check_logged_in();
         $params = $_POST;
         $attributes = array(
             'nimi' => $params['nimi'],
@@ -69,6 +81,7 @@ class AskareController extends BaseController {
     }
     
     public static function destroy($id) {
+        self::check_logged_in();
         $askare = Askare::find($id, self::get_user_logged_in()->id);
         $askare->destroy();
         
