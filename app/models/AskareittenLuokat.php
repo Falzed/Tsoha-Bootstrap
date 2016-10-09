@@ -21,7 +21,7 @@ class AskareittenLuokat extends BaseModel {
     }
     
     public static function kaikki($askare_id) {
-        $query = DB::connection()->prepare('SELECT * FROM AskareittenLuokat WHERE askare_id = :askare_id');
+        $query = DB::connection()->prepare('SELECT * FROM AskareittenLuokat INNER JOIN Luokka ON luokka_id = id WHERE askare_id = :askare_id');
         $query->execute(array('askare_id' =>  $askare_id));
         $rows = $query->fetchAll();
         $luokat = array();
@@ -30,7 +30,7 @@ class AskareittenLuokat extends BaseModel {
 
             $luokat[] = new Luokka(array(
                 'id' => $row['luokka_id'],
-                'nimi' => $row['luokka_nimi'],
+                'nimi' => $row['nimi'],
             ));
         }
 
