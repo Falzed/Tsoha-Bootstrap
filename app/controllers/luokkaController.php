@@ -12,7 +12,7 @@ class LuokkaController extends BaseController {
         $user = self::get_user_logged_in();
         $id = $user->id;
         $luokat = Luokka::kaikki($id);
-        View::make('askare/listaus.html', array('luokat' => $luokat));
+        View::make('luokka/lista.html', array('luokat' => $luokat));
     }
     
     public static function uusi() {

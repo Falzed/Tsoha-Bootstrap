@@ -3,29 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/create_tables.sh</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/views/askare/askare.html</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/views/askare/add.html</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/controllers/askare_controller.php</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/models/kayttaja.php</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/sql/add_test_data.sql</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/config/environment.sh</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/models/AskareittenLuokat.php</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/views/kayttaja/rekisteroityminen.html</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/sql/drop_tables.sql</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/sql/create_tables.sql</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/lib/base_controller.php</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/models/hello_world.php</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/views/suunnitelmat/home.html</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/models/Luokka.php</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/views/askare/muokkaus.html</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/config/routes.php</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/lib/base_model.php</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/views/kayttaja/kirjautuminen.html</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/controllers/hello_world_controller.php</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/views/askare/listaus.html</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/models/askare.php</file>
-            <file>file:/C:/Users/Oskari/Tsoha-Bootstrap/app/views/base.html</file>
+            <file>file:/home/oskari/TsohaSsh/app/models/LuokanAlaluokat.php</file>
+            <file>file:/home/oskari/TsohaSsh/app/views/askare/add.html</file>
+            <file>file:/home/oskari/TsohaSsh/app/controllers/askare_controller.php</file>
+            <file>file:/home/oskari/TsohaSsh/sql/create_tables.sql</file>
+            <file>file:/home/oskari/TsohaSsh/app/models/AskareittenLuokat.php</file>
+            <file>file:/home/oskari/TsohaSsh/sql/add_test_data.sql</file>
+            <file>file:/home/oskari/TsohaSsh/app/models/askare.php</file>
+            <file>file:/home/oskari/TsohaSsh/config/routes.php</file>
+            <file>file:/home/oskari/TsohaSsh/app/models/Luokka.php</file>
+            <file>file:/home/oskari/TsohaSsh/app/controllers/UserController.php</file>
+            <file>file:/home/oskari/TsohaSsh/app/controllers/luokkaController.php</file>
+            <file>file:/home/oskari/TsohaSsh/app/views/askare/muokkaus.html</file>
+            <file>file:/home/oskari/TsohaSsh/lib/base_model.php</file>
         </group>
     </open-files>
 </project-private>

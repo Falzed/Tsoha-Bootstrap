@@ -2,7 +2,7 @@
 {% import "macros/forms.html" as forms %}
 {% block content %}
 {% if user_logged_in %}
-<h1>Käyttäjän {{user_logged_in.nimi}} muistilista</h1>
+<h1>Käyttäjän {{user_logged_in.nimi}} luokat</h1>
 {% endif %}
 {% if message %}
 {{message}}
@@ -27,6 +27,9 @@
 
         <tr>
             <td><a href="{{base_path}}/luokka/{{luokka.id}}">{{luokka.nimi}}</a></td>
+            <td>TODO</td>
+            <td>{{forms.destroy_button("#{base_path}/luokka/#{luokka.id}/delete")}}</td>
+            <td><a href ="{{base_path}}/luokka/{{luokka.id}}/edit"<button class="btn btn-danger">{{text|default('Muokkaa')}}</button></a></td>
         </tr>
         {% endfor %}
     </tbody>
