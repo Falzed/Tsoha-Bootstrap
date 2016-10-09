@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% import "macros/forms.html" as forms %}
+{% block content %}
+<h1>{{luokka.nimi}}</h1>
+<p>
+    {{forms.destroy_button("#{base_path}/luokka/#{luokka.id}/delete")}}
+    <a href ="{{base_path}}/luokka/{{luokka.id}}/edit"><button class="btn btn-danger">{{text|default('Muokkaa')}}</button></a>
+</p>
+<h2>Alaluokat</h2>
+<ul>
+    {for alaluokka in alaluokat}
+    <li>{{alaluokka.nimi}}  {{forms.destroy_button("#{base_path}/luokka/#{alaluokka.id}/delete")}} <a href ="{{base_path}}/luokka/{{alaluokka.id}}/edit"><button class="btn btn-danger">{{text|default('Muokkaa')}}</button></a></li>
+</ul>
+{% endblock %}

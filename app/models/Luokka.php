@@ -26,10 +26,20 @@ class Luokka extends BaseModel {
         $row = $query->fetch();
         $this->id = $row['id'];
     }
+    
+    public function update() {
+        $query = DB::connection()->prepare('UPDATE Luokka (nimi) VALUES (:nimi) RETURNING id');
+        $query->execute(array('nimi' => $this->nimi));
+        $row = $query->fetch();
+        $this->id = $row['id'];
 
-    public static function find($nimi) {
-        $query = DB::connection()->prepare('SELECT * FROM Luokka WHERE nimi = :nimi LIMIT 1');
-        $query->execute(array('nimi' => $nimi));
+        Kint::trace();
+        Kint::dump($row);
+    }
+
+    public static function find($id, $kayttajan_id) {
+        $query = DB::connection()->prepare('SELECT * FROM Luokka WHERE id = :id AND kayttajan_id = :kayttajan_id LIMIT 1');
+        $query->execute(array('id' => $id));
         $row = $query->fetch();
         if ($row) {
             $luokka = new Luokka(array(

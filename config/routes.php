@@ -46,9 +46,27 @@ $routes->post('/logout', function(){
   UserController::logout();
 });
 
+$routes->get('/luokat', function() {
+    LuokkaController::listaus();
+});
 $routes->get('/luokka/add', function(){
   LuokkaController::uusi();
 });
 $routes->post('/luokka', function(){
   LuokkaController::tallenna();
+});
+$routes->get('/luokka/:id', function(){
+  LuokkaController::luokka($id);
+});
+$routes->get('/luokka/:id/edit', function(){
+  LuokkaController::muokkaus($id);
+});
+$routes->post('/luokka/:id/edit', function($id) {
+    LuokkaController::update($id);
+});
+$routes->post('/luokka/:id/delete', function($id) {
+    LuokkaController::destroy($id);
+});
+$routes->post('/luokka', function() {
+    LuokkaController::tallenna();
 });
