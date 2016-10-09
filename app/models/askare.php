@@ -59,11 +59,9 @@ class Askare extends BaseModel {
     }
 
     public function update() {
-        $query = DB::connection()->prepare('UPDATE Askare (nimi, description, prioriteetti, kayttaja_id) VALUES (:nimi, :description, :prioriteetti, :kayttaja_id) RETURNING id');
-        $luokat_temp = Askare::stringToClasses($this->luokat_string);
-        $query->execute(array('nimi' => $this->nimi, 'description' => $this->description, 'prioriteetti' => $this->prioriteetti));
+        $query = DB::connection()->prepare('UPDATE Askare SET nimi = :nimi, description = :description, prioriteetti = :prioriteetti WHERE id = :id');
+        $query->execute(array('nimi' => $this->nimi, 'description' => $this->description, 'prioriteetti' => $this->prioriteetti, 'id' => $this->id));
         $row = $query->fetch();
-        $this->id = $row['id'];
 
 
         Kint::trace();
