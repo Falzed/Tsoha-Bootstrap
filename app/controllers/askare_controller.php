@@ -11,7 +11,15 @@ class AskareController extends BaseController {
         self::check_logged_in();
         $user = self::get_user_logged_in();
         $id = $user->id;
-        $askareet = Askare::kaikki($id);
+        $params = $_GET;
+        $options = array();
+        if(array_key_exists('sort', $params)) {
+            $options['sort'] = $params['sort'];
+        }
+        if(array_key_exists('asc_desc', $params)) {
+            $options['asc_desc'] = $params['asc_desc'];
+        }
+        $askareet = Askare::kaikki($id, $options);
         $askareittenLuokat = array();
 
         //refaktoroi myöhemmin omaan kontrolleriin

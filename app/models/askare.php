@@ -16,29 +16,31 @@ class Askare extends BaseModel {
 
     public static function kaikki($kayttaja_id, $options) {
         $statement = 'SELECT * FROM Askare WHERE kayttaja_id = :kayttaja_id';
+        $exec_params = array('kayttaja_id' => $kayttaja_id);
 
+        //jostain syystä :sort ei tunnu toimivan kyselyssä joten kovakoodatut vaihtoehdot
         if (array_key_exists('sort', $options)) {
             $sort = $options['sort'];
-            $statement = $statement . ' ORDER BY :sort';
+            if ($sort == 'prioriteetti') {
+                $statement = $statement . ' ORDER BY prioriteetti';
+            } else if($sort == 'id') {
+                $statement = $statement . ' ORDER BY id';
+            } else if($sort == 'nimi') {
+                $statement = $statement . ' ORDER BY nimi';
+            }
+//            $exec_params['sort'] = $sort;
             if (array_key_exists('asc_desc', $options)) {
                 $asc_desc = $options['asc_desc'];
-                $statement = $statement . ' :asc_desc';
+                if ($asc_desc == 'ASC') {
+                    $statement = $statement . ' ASC';
+                } else if ($asc_desc == 'DESC') {
+                    $statement = $statement . ' DESC';
+                }
             }
         }
+//        $statement = $statement . ' ORDER BY prioriteetti DESC';
         $query = DB::connection()->prepare($statement);
-//        $query = DB::connection()->prepare('SELECT * FROM Askare WHERE kayttaja_id = :kayttaja_id ORDER BY :sort :asc_desc');
-//        if (array_key_exists('sort', $options)) {
-//            if ($options['sort'] == 'prioriteetti') {
-//                $query = DB::connection()->prepare('SELECT * FROM Askare WHERE kayttaja_id = :kayttaja_id ORDER BY prioriteetti');
-//            } else if ($options['sort'] == 'aakkos') {
-//                $query = DB::connection()->prepare('SELECT * FROM Askare WHERE kayttaja_id = :kayttaja_id ORDER BY nimi');
-//            } else {
-//                $query = DB::connection()->prepare('SELECT * FROM Askare WHERE kayttaja_id = :kayttaja_id ORDER BY id');
-//            }
-//        } else {
-//            $query = DB::connection()->prepare('SELECT * FROM Askare WHERE kayttaja_id = :kayttaja_id ORDER BY id');
-//        }
-        $query->execute(array('kayttaja_id' => $kayttaja_id));
+        $query->execute($exec_params);
         $rows = $query->fetchAll();
         $askareet = array();
 
@@ -53,7 +55,10 @@ class Askare extends BaseModel {
                 'added' => $row['added']
             ));
         }
-
+//        Kint::dump($rows);
+//        Kint::dump($statement);
+//        Kint::dump($query);
+//        Kint::dump($sort);
         return $askareet;
     }
 
