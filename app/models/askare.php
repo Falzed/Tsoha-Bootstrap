@@ -45,9 +45,24 @@ class Askare extends BaseModel {
     //Palauttaa sql-kyselyn ja parametrit $query->execute:lle
     private static function parse_options($options, $kayttaja_id) {
 
-        $statement_and_exec_params = self::parse_query_from_ordering_options($options, $kayttaja_id);
-        $statement = $statement_and_exec_params['statement'];
-        $exec_params = $statement_and_exec_params['exec_params'];
+        $statement = 'SELECT * FROM Askare WHERE kayttaja_id = :kayttaja_id';
+        $exec_params = array('kayttaja_id' => $kayttaja_id);
+//        $statement_and_exec_params = self::parse_query_from_ordering_options($options, $kayttaja_id);
+//        $statement = $statement_and_exec_params['statement'];
+//        $exec_params = $statement_and_exec_params['exec_params'];
+
+        $parse_ordering_and_search = self::parse_query_from_ordering_options_and_search($options, $kayttaja_id);
+        $haku = $parse_ordering_and_search['haku'];
+        $sort = $parse_ordering_and_search['sort'];
+        $asc_desc = $parse_ordering_and_search['asc_desc'];
+        $exec_params['like'] = '%' . $haku . '%';
+        $statement .= ' AND nimi LIKE :like';
+
+        $statement .= ' ORDER BY :sort';
+        $exec_params['sort'] = '%' . $sort . '%';
+
+        $statement = $statement . ' :asc_desc';
+        $exec_params['asc_desc'] = '%' . $asc_desc . '%';
 
         $page_options = self::parse_page_options($options);
         $page = $page_options['page'];
@@ -75,37 +90,22 @@ class Askare extends BaseModel {
         return array('page' => $page, 'page_size' => $page_size);
     }
 
-    //kysely alkuun, ORDER BY ja ASC/DESC
-    private static function parse_query_from_ordering_options($options, $kayttaja_id) {
-        $statement = 'SELECT * FROM Askare WHERE kayttaja_id = :kayttaja_id';
-        $exec_params = array('kayttaja_id' => $kayttaja_id);
-
+    //kysely alkuun, ORDER BY ja ASC/DESC, haku
+    private static function parse_query_from_ordering_options_and_search($options, $kayttaja_id) {
+        $haku = '';
+        $sort = '';
+        $asc_desc = '';
         if (isset($options['haku'])) {
-            $exec_params['like'] = '%' . $options['haku'] . '%';
-            $statement .= ' AND nimi LIKE :like';
+            $haku = $options['haku'];
         }
         if (array_key_exists('sort', $options)) {
-            $statement = $statement . ' ORDER BY :sort';
-            $exec_params['sort'] =  '%' . $options['sort'] . '%';
-//            if ($sort == 'prioriteetti') {
-//                $statement = $statement . ' ORDER BY prioriteetti';
-//            } else if ($sort == 'id') {
-//                $statement = $statement . ' ORDER BY id';
-//            } else if ($sort == 'nimi') {
-//                $statement = $statement . ' ORDER BY nimi';
-//            }
+            $sort = $options['sort'];
 
             if (array_key_exists('asc_desc', $options)) {
-//                if ($options['asc_desc'] == 'ASC') {
-//                    $statement = $statement . ' ASC';
-//                } else {
-//                    $statement = $statement . ' DESC';
-//                }
-                $statement = $statement . ' :asc_desc';
-                $exec_params['asc_desc'] = '%' . $options['asc_desc'] . '%';
+                $asc_desc = $options['asc_desc'];
             }
         }
-        return array('statement' => $statement, 'exec_params' => $exec_params);
+        return array('haku' => $haku, 'sort' => $sort, 'asc_desc' => $asc_desc);
     }
 
     public static function count($kayttaja_id) {
