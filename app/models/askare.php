@@ -25,13 +25,15 @@ class Askare extends BaseModel {
         //jostain syystä :sort ei tunnu toimivan kyselyssä joten kovakoodatut vaihtoehdot
         if (array_key_exists('sort', $options)) {
             $sort = $options['sort'];
-            if ($sort == 'prioriteetti') {
-                $statement = $statement . ' ORDER BY prioriteetti';
-            } else if ($sort == 'id') {
-                $statement = $statement . ' ORDER BY id';
-            } else if ($sort == 'nimi') {
-                $statement = $statement . ' ORDER BY nimi';
-            }
+            $statement = $statement . ' ORDER BY :sort';
+            $exec_params['sort'] = $sort; 
+//            if ($sort == 'prioriteetti') {
+//                $statement = $statement . ' ORDER BY prioriteetti';
+//            } else if ($sort == 'id') {
+//                $statement = $statement . ' ORDER BY id';
+//            } else if ($sort == 'nimi') {
+//                $statement = $statement . ' ORDER BY nimi';
+//            }
 //            $exec_params['sort'] = $sort;
             if (array_key_exists('asc_desc', $options)) {
                 $asc_desc = $options['asc_desc'];
