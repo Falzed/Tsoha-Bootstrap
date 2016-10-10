@@ -85,27 +85,24 @@ class Askare extends BaseModel {
             $statement .= ' AND nimi LIKE :like';
         }
         if (array_key_exists('sort', $options)) {
-            $sort = $options['sort'];
-//            $statement = $statement . ' ORDER BY :sort';
-//            $exec_params['sort'] = $sort;
-            //aiempi ei toimi jostain syystä? 
-            if ($sort == 'prioriteetti') {
-                $statement = $statement . ' ORDER BY prioriteetti';
-            } else if ($sort == 'id') {
-                $statement = $statement . ' ORDER BY id';
-            } else if ($sort == 'nimi') {
-                $statement = $statement . ' ORDER BY nimi';
-            }
+            $statement = $statement . ' ORDER BY :sort';
+            $exec_params['sort'] =  '%' . $options['sort'] . '%';
+//            if ($sort == 'prioriteetti') {
+//                $statement = $statement . ' ORDER BY prioriteetti';
+//            } else if ($sort == 'id') {
+//                $statement = $statement . ' ORDER BY id';
+//            } else if ($sort == 'nimi') {
+//                $statement = $statement . ' ORDER BY nimi';
+//            }
 
             if (array_key_exists('asc_desc', $options)) {
-                if ($options['asc_desc'] == 'ASC') {
-                    $statement = $statement . ' ASC';
-                } else {
-                    $statement = $statement . ' DESC';
-                }
-//                $asc_desc = $options['asc_desc'];
-//                $statement = $statement . ' :asc_desc';
-//                $exec_params['asc_desc'] = $asc_desc;
+//                if ($options['asc_desc'] == 'ASC') {
+//                    $statement = $statement . ' ASC';
+//                } else {
+//                    $statement = $statement . ' DESC';
+//                }
+                $statement = $statement . ' :asc_desc';
+                $exec_params['asc_desc'] = '%' . $options['asc_desc'] . '%';
             }
         }
         return array('statement' => $statement, 'exec_params' => $exec_params);
