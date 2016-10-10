@@ -13,10 +13,13 @@ class AskareController extends BaseController {
         $id = $user->id;
         $params = $_GET;
         $options = array();
-        if(array_key_exists('sort', $params)) {
+        if (isset($params['haku'])) {
+            $options['haku'] = $params['haku'];
+        }
+        if (array_key_exists('sort', $params)) {
             $options['sort'] = $params['sort'];
         }
-        if(array_key_exists('asc_desc', $params)) {
+        if (array_key_exists('asc_desc', $params)) {
             $options['asc_desc'] = $params['asc_desc'];
         }
         $askareet = Askare::kaikki($id, $options);
@@ -28,16 +31,15 @@ class AskareController extends BaseController {
             $askareenLuokat[] = Luokka::kaikki($askare->kayttaja_id);
             $askareittenLuokat[] = $askareenLuokat;
         }
-        
-        $params = $_GET;
-        $options = array();
-        if(array_key_exists('sort', $params)) {
+
+        if (array_key_exists('sort', $params)) {
             $options['sort'] = $params['sort'];
         }
-        if(array_key_exists('asc_desc', $params)) {
+        if (array_key_exists('asc_desc', $params)) {
             $options['asc_desc'] = $params['asc_desc'];
         }
-        View::make('askare/listaus.html', array('askareet' => $askareet, 
+        Kint::dump($askareittenLuokat);
+        View::make('askare/listaus.html', array('askareet' => $askareet,
             'askareittenLuokat' => $askareittenLuokat, 'options' => $options));
     }
 

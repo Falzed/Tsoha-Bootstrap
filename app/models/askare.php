@@ -17,7 +17,11 @@ class Askare extends BaseModel {
     public static function kaikki($kayttaja_id, $options) {
         $statement = 'SELECT * FROM Askare WHERE kayttaja_id = :kayttaja_id';
         $exec_params = array('kayttaja_id' => $kayttaja_id);
-
+        
+        if(isset($options['haku'])) {
+            $statement .= 'AND nimi LIKE :like';
+            $exec_params['like'] = '%' . $exec_params['haku'] . '%';
+        }
         //jostain syystä :sort ei tunnu toimivan kyselyssä joten kovakoodatut vaihtoehdot
         if (array_key_exists('sort', $options)) {
             $sort = $options['sort'];
