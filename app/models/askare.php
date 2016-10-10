@@ -26,6 +26,7 @@ class Askare extends BaseModel {
         if (array_key_exists('sort', $options)) {
             $sort = $options['sort'];
             $statement = $statement . ' ORDER BY :sort';
+            $exec_params['sort'] = $sort; 
 //            if ($sort == 'prioriteetti') {
 //                $statement = $statement . ' ORDER BY prioriteetti';
 //            } else if ($sort == 'id') {
