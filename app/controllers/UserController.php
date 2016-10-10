@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Hoitaa sisäänkirjautumisen.
+ * Hoitaa sisään- ja uloskirjautumisen.
  *
  * @author Oskari
  */
-class UserController {
+class UserController extends BaseController {
 
     public function login() {
         View::make('kayttaja/kirjautuminen.html');
@@ -24,5 +24,7 @@ class UserController {
             Redirect::to('/askareet', array('message' => 'Tervetuloa takaisin ' . $user->nimi . '!'));
         }
     }
-
+    public static function logout() {
+        parent::logout();
+    }
 }
