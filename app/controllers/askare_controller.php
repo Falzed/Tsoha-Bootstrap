@@ -13,15 +13,30 @@ class AskareController extends BaseController {
         $id = $user->id;
         $params = $_GET;
         $options = array();
+        $url_params = '?';
         if (isset($params['haku'])) {
             $options['haku'] = $params['haku'];
+            $url_params .= 'haku=' . $params['haku'];
         }
         if (array_key_exists('sort', $params)) {
             $options['sort'] = $params['sort'];
+            $url_params .= '&sort=' . $params['sort'];
         }
         if (array_key_exists('asc_desc', $params)) {
             $options['asc_desc'] = $params['asc_desc'];
+            $url_params .= '&asc_desc=' . $params['asc_desc'];
         }
+        if (isset($params['page'])) {
+            $options['page'] = $params['page'];
+        } else {
+            $options['page'] = 1;
+        }
+        if (isset($params['page_size'])) {
+            $options['page_size'] = $params['page_size'];
+        } else {
+            $options['page_size'] = 10;
+        }
+        
         $askareet = Askare::kaikki($id, $options);
 //        $askareittenLuokat = array();
         //refaktoroi myöhemmin omaan kontrolleriin
@@ -37,10 +52,13 @@ class AskareController extends BaseController {
         if (array_key_exists('asc_desc', $params)) {
             $options['asc_desc'] = $params['asc_desc'];
         }
+        
+        $askare_count = Askare::count($user->id);
+        $pages = ceil($askare_count/$options['page_size']);
 //        Kint::dump($askareittenLuokat);
         View::make('askare/listaus.html', array('askareet' => $askareet,
 //            'askareittenLuokat' => $askareittenLuokat, 'options' => $options));
-            'options' => $options));
+            'options' => $options, 'pages'=>$pages, 'url_params' => $url_params));
     }
 
     public static function askare($id) {
@@ -79,7 +97,7 @@ class AskareController extends BaseController {
         ));
         Kint::dump($params);
 
-//        $luokkien_idt_apu = $params['luokat'];
+        $luokkien_idt = null;
         if (array_key_exists('luokat', $params)) {
             $luokkien_idt = $params['luokat'];
         }
@@ -88,16 +106,18 @@ class AskareController extends BaseController {
         if (count($errors) == 0) {
             $askare->tallenna(self::get_user_logged_in()->id);
             //refaktoroi myöhemmin omaan kontrolleriin
-            foreach ($luokkien_idt as $luokan_id) {
-                $askareittenLuokat = new AskareittenLuokat(array('askare_id' => $askare->id, 'luokka_id' => $luokan_id));
-                $askareittenLuokat->tallenna(self::get_user_logged_in()->id);
-                if (array_key_exists('luokat', $params)) {
-                    foreach ($luokkien_idt as $luokan_id) {
-                        $askareittenLuokat = new AskareittenLuokat(array('askare_id' => $askare->id, 'luokka_id' => $luokan_id));
-                        $askareittenLuokat->tallenna(self::get_user_logged_in()->id);
+            if (!is_null($luokkien_idt)) {
+                foreach ($luokkien_idt as $luokan_id) {
+                    $askareittenLuokat = new AskareittenLuokat(array('askare_id' => $askare->id, 'luokka_id' => $luokan_id));
+                    $askareittenLuokat->tallenna(self::get_user_logged_in()->id);
+                    if (array_key_exists('luokat', $params)) {
+                        foreach ($luokkien_idt as $luokan_id) {
+                            $askareittenLuokat = new AskareittenLuokat(array('askare_id' => $askare->id, 'luokka_id' => $luokan_id));
+                            $askareittenLuokat->tallenna(self::get_user_logged_in()->id);
+                        }
                     }
+                    Redirect::to('/askare/' . $askare->id, array('message' => 'Askare on lisätty muistilistaasi!'));
                 }
-                Redirect::to('/askare/' . $askare->id, array('message' => 'Askare on lisätty muistilistaasi!'));
             }
         } else {
             View::make('askare/add.html', array('errors' => $errors, 'attributes' => $attributes));

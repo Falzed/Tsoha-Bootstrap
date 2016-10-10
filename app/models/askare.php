@@ -17,19 +17,19 @@ class Askare extends BaseModel {
     public static function kaikki($kayttaja_id, $options) {
         $statement = 'SELECT * FROM Askare WHERE kayttaja_id = :kayttaja_id';
         $exec_params = array('kayttaja_id' => $kayttaja_id);
-        
-        if(isset($options['haku'])) {
+
+        if (isset($options['haku'])) {
             $exec_params['like'] = '%' . $options['haku'] . '%';
-            $statement .=  ' AND nimi LIKE :like';            
+            $statement .= ' AND nimi LIKE :like';
         }
         //jostain syystä :sort ei tunnu toimivan kyselyssä joten kovakoodatut vaihtoehdot
         if (array_key_exists('sort', $options)) {
             $sort = $options['sort'];
             if ($sort == 'prioriteetti') {
                 $statement = $statement . ' ORDER BY prioriteetti';
-            } else if($sort == 'id') {
+            } else if ($sort == 'id') {
                 $statement = $statement . ' ORDER BY id';
-            } else if($sort == 'nimi') {
+            } else if ($sort == 'nimi') {
                 $statement = $statement . ' ORDER BY nimi';
             }
 //            $exec_params['sort'] = $sort;
@@ -42,6 +42,22 @@ class Askare extends BaseModel {
                 }
             }
         }
+
+        if (isset($options['page'])) {
+            $page = $options['page'];
+        } else {
+            $page = 1;
+        }
+        if(isset($options['page_size'])) {
+            $page_size = $options['page_size'];
+        } else {
+            $page_size = 10;
+        }
+        $statement .= ' LIMIT :limit OFFSET :offset';
+        $exec_params['limit'] = $page_size;
+        $exec_params['offset'] = $page_size * ($page - 1);
+
+
 //        $statement = $statement . ' ORDER BY prioriteetti DESC';
         $query = DB::connection()->prepare($statement);
         $query->execute($exec_params);
@@ -64,6 +80,14 @@ class Askare extends BaseModel {
 //        Kint::dump($query);
 //        Kint::dump($sort);
         return $askareet;
+    }
+
+    public static function count($kayttaja_id) {
+        $query = DB::connection()->prepare('SELECT Count(*) FROM Askare WHERE kayttaja_id = :kayttaja_id');
+        $query->execute(array('kayttaja_id' => $kayttaja_id));
+        $row = $query->fetch();
+        $count = $row['count'];
+        return $count;
     }
 
     public static function find($id, $kayttaja_id) {
