@@ -23,13 +23,12 @@ class AskareController extends BaseController {
             $options['asc_desc'] = $params['asc_desc'];
         }
         $askareet = Askare::kaikki($id, $options);
-        $askareittenLuokat = array();
-
+//        $askareittenLuokat = array();
         //refaktoroi myöhemmin omaan kontrolleriin
         foreach ($askareet as $askare) {
-            $askareenLuokat = array();
-            $askareenLuokat[] = AskareittenLuokat::kaikki($askare->id);
-            $askareittenLuokat[] = $askareenLuokat;
+//            $askareenLuokat = array();
+//            $askareenLuokat[] = AskareittenLuokat::kaikki($askare->id);
+            $askare->luokat = AskareittenLuokat::kaikki($askare->id);
         }
 
         if (array_key_exists('sort', $params)) {
@@ -40,7 +39,8 @@ class AskareController extends BaseController {
         }
 //        Kint::dump($askareittenLuokat);
         View::make('askare/listaus.html', array('askareet' => $askareet,
-            'askareittenLuokat' => $askareittenLuokat, 'options' => $options));
+//            'askareittenLuokat' => $askareittenLuokat, 'options' => $options));
+            'options' => $options));
     }
 
     public static function askare($id) {

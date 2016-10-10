@@ -53,10 +53,8 @@
             <td>{{askare.description}}</td>
             <td>{{askare.prioriteetti}}</td>
             <td>
-                {%for askareenLuokat in askareittenLuokat %}
-                {%for luokka in askareenLuokat %}
-                {{luokka.nimi}} <br>
-                {%endfor %}
+                {%for luokka in {{askare.luokat}} %}
+                    {{luokka.nimi}} <br>
                 {%endfor %}
             </td>
             <!--<td>{{askare.luokat_string}}</td>-->

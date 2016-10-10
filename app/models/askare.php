@@ -7,7 +7,7 @@
  */
 class Askare extends BaseModel {
 
-    public $id, $kayttaja_id, $nimi, $description, $prioriteetti, $added;
+    public $id, $kayttaja_id, $nimi, $description, $prioriteetti, $added, $luokat;
 
     public function __construct($attributes) {
         parent::__construct($attributes);
