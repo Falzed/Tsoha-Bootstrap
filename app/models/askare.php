@@ -15,52 +15,10 @@ class Askare extends BaseModel {
     }
 
     public static function kaikki($kayttaja_id, $options) {
-        $statement = 'SELECT * FROM Askare WHERE kayttaja_id = :kayttaja_id';
-        $exec_params = array('kayttaja_id' => $kayttaja_id);
 
-        if (isset($options['haku'])) {
-            $exec_params['like'] = '%' . $options['haku'] . '%';
-            $statement .= ' AND nimi LIKE :like';
-        }
-        //jostain syystä :sort ei tunnu toimivan kyselyssä joten kovakoodatut vaihtoehdot
-        if (array_key_exists('sort', $options)) {
-            $sort = $options['sort'];
-            $statement = $statement . ' ORDER BY :sort';
-            $exec_params['sort'] = $sort; 
-//            if ($sort == 'prioriteetti') {
-//                $statement = $statement . ' ORDER BY prioriteetti';
-//            } else if ($sort == 'id') {
-//                $statement = $statement . ' ORDER BY id';
-//            } else if ($sort == 'nimi') {
-//                $statement = $statement . ' ORDER BY nimi';
-//            }
-//            $exec_params['sort'] = $sort;
-            if (array_key_exists('asc_desc', $options)) {
-                $asc_desc = $options['asc_desc'];
-                if ($asc_desc == 'ASC') {
-                    $statement = $statement . ' ASC';
-                } else if ($asc_desc == 'DESC') {
-                    $statement = $statement . ' DESC';
-                }
-            }
-        }
-
-        if (isset($options['page'])) {
-            $page = $options['page'];
-        } else {
-            $page = 1;
-        }
-        if(isset($options['page_size'])) {
-            $page_size = $options['page_size'];
-        } else {
-            $page_size = 10;
-        }
-        $statement .= ' LIMIT :limit OFFSET :offset';
-        $exec_params['limit'] = $page_size;
-        $exec_params['offset'] = $page_size * ($page - 1);
-
-
-//        $statement = $statement . ' ORDER BY prioriteetti DESC';
+        $parse = self::parse_options($options, $kayttaja_id);
+        $statement = $parse['statement'];
+        $exec_params = $parse['exec_params'];
         $query = DB::connection()->prepare($statement);
         $query->execute($exec_params);
         $rows = $query->fetchAll();
@@ -82,6 +40,57 @@ class Askare extends BaseModel {
 //        Kint::dump($query);
 //        Kint::dump($sort);
         return $askareet;
+    }
+
+    //Palauttaa sql-kyselyn ja parametrit $query->execute:lle
+    private static function parse_options($options, $kayttaja_id) {
+        
+        $statement_and_exec_params = self::parse_query_from_ordering_options($options, $kayttaja_id);
+        $statement = $statement_and_exec_params['statement'];
+        $exec_params = $statement_and_exec_params['exec_params'];        
+
+        $page_options = self::parse_page_options($options);
+        $page = $page_options['page_size'];
+        $page_size = $page_options['page'];
+        $statement .= ' LIMIT :limit OFFSET :offset';
+        $exec_params['limit'] = $page_size;
+        $exec_params['offset'] = $page_size * ($page - 1);
+        return array('statement' => $statement, 'exec_params' => $exec_params);
+    }
+    //nykyinen sivu, sivun koko
+    private static function parse_page_options($options) {
+        if (isset($options['page'])) {
+            $page = $options['page'];
+        } else {
+            $page = 1;
+        }
+        if (isset($options['page_size'])) {
+            $page_size = $options['page_size'];
+        } else {
+            $page_size = 10;
+        }
+        return array('page' => $page, 'page_size' => $page_size);
+    }
+    //kysely alkuun, ORDER BY ja ASC/DESC
+    private static function parse_query_from_ordering_options($options, $kayttaja_id) {
+        $statement = 'SELECT * FROM Askare WHERE kayttaja_id = :kayttaja_id';
+        $exec_params = array('kayttaja_id' => $kayttaja_id);
+
+        if (isset($options['haku'])) {
+            $exec_params['like'] = '%' . $options['haku'] . '%';
+            $statement .= ' AND nimi LIKE :like';
+        }
+        if (array_key_exists('sort', $options)) {
+            $sort = $options['sort'];
+            $statement = $statement . ' ORDER BY :sort';
+            $exec_params['sort'] = $sort;
+            if (array_key_exists('asc_desc', $options)) {
+                $asc_desc = $options['asc_desc'];
+                $statement = $statement . ' :asc_desc';
+                $exec_params['asc_desc'] = $asc_desc;
+            }
+        }
+        return array('statement' => $statement, 'exec_params' => $exec_params);
     }
 
     public static function count($kayttaja_id) {
