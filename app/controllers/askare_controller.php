@@ -28,7 +28,7 @@ class AskareController extends BaseController {
         //refaktoroi myöhemmin omaan kontrolleriin
         foreach ($askareet as $askare) {
             $askareenLuokat = array();
-            $askareenLuokat[] = Luokka::kaikki($askare->kayttaja_id);
+            $askareenLuokat[] = AskareittenLuokat::kaikki($askare->id);
             $askareittenLuokat[] = $askareenLuokat;
         }
 

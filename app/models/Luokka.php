@@ -59,6 +59,21 @@ class Luokka extends BaseModel {
         }
         return $luokat;
     }
+    
+    public static function askareen_luokat($askareen_id) {
+        $query = DB::connection()->prepare('SELECT * FROM AskareittenLuokat INNER JOIN Luokka ON luokka_id = id WHERE askareen_id = :askareen_id');
+        $query->execute(array('askareen_id' => $askareen_id));
+        $rows = $query->fetchAll();
+        $luokat = array();
+        foreach ($rows as $row) {
+            $luokat[] = new Luokka(array(
+                'id' => $row['id'],
+                'nimi' => $row['nimi'],
+                'kayttajan_id' => $row['kayttajan_id']
+            ));
+        }
+        return $luokat;
+    }
 
     public function validate_name() {
         return self::validate_string_length($this->nimi, 1);
