@@ -51,7 +51,7 @@ class Luokka extends BaseModel {
         $rows = $query->fetchAll();
         $luokat = array();
         foreach ($rows as $row) {
-            $luokat[] = new Askare(array(
+            $luokat[] = new Luokka(array(
                 'id' => $row['id'],
                 'nimi' => $row['nimi'],
                 'kayttajan_id' => $row['kayttajan_id']

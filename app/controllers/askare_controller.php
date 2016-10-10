@@ -38,7 +38,7 @@ class AskareController extends BaseController {
         if (array_key_exists('asc_desc', $params)) {
             $options['asc_desc'] = $params['asc_desc'];
         }
-        Kint::dump($askareittenLuokat);
+//        Kint::dump($askareittenLuokat);
         View::make('askare/listaus.html', array('askareet' => $askareet,
             'askareittenLuokat' => $askareittenLuokat, 'options' => $options));
     }
