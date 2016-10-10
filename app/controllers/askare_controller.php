@@ -12,6 +12,25 @@ class AskareController extends BaseController {
         $user = self::get_user_logged_in();
         $id = $user->id;
         $params = $_GET;
+
+        $parse = self::parse_lista_params($params);
+        $options = $parse['options'];
+        $url_params = $parse['url_params'];
+
+        $askareet = Askare::kaikki($id, $options);
+
+        foreach ($askareet as $askare) {
+            $askare->luokat = AskareittenLuokat::kaikki($askare->id);
+        }
+
+        $askare_count = Askare::count($user->id);
+        $pages = ceil($askare_count / $options['page_size']);
+//        Kint::dump($askareittenLuokat);
+        View::make('askare/listaus.html', array('askareet' => $askareet,
+            'options' => $options, 'pages' => $pages, 'url_params' => $url_params));
+    }
+
+    private static function parse_lista_params($params) {
         $options = array();
         $url_params = '?';
         if (isset($params['haku'])) {
@@ -36,29 +55,13 @@ class AskareController extends BaseController {
         } else {
             $options['page_size'] = 10;
         }
-        
-        $askareet = Askare::kaikki($id, $options);
-//        $askareittenLuokat = array();
-        //refaktoroi myöhemmin omaan kontrolleriin
-        foreach ($askareet as $askare) {
-//            $askareenLuokat = array();
-//            $askareenLuokat[] = AskareittenLuokat::kaikki($askare->id);
-            $askare->luokat = AskareittenLuokat::kaikki($askare->id);
-        }
-
         if (array_key_exists('sort', $params)) {
             $options['sort'] = $params['sort'];
         }
         if (array_key_exists('asc_desc', $params)) {
             $options['asc_desc'] = $params['asc_desc'];
         }
-        
-        $askare_count = Askare::count($user->id);
-        $pages = ceil($askare_count/$options['page_size']);
-//        Kint::dump($askareittenLuokat);
-        View::make('askare/listaus.html', array('askareet' => $askareet,
-//            'askareittenLuokat' => $askareittenLuokat, 'options' => $options));
-            'options' => $options, 'pages'=>$pages, 'url_params' => $url_params));
+        return array('options' => $options, 'url_params' => $url_params);
     }
 
     public static function askare($id) {
@@ -90,11 +93,7 @@ class AskareController extends BaseController {
             'description' => $params['description'],
             'prioriteetti' => $params['prioriteetti']
         );
-        $askare = new Askare(array(
-            'nimi' => $params['nimi'],
-            'description' => $params['description'],
-            'prioriteetti' => $params['prioriteetti']
-        ));
+        $askare = new Askare($params);
         Kint::dump($params);
 
         $luokkien_idt = null;
@@ -105,22 +104,19 @@ class AskareController extends BaseController {
         $errors = $askare->errors();
         if (count($errors) == 0) {
             $askare->tallenna(self::get_user_logged_in()->id);
-            //refaktoroi myöhemmin omaan kontrolleriin
-            if (!is_null($luokkien_idt)) {
-                foreach ($luokkien_idt as $luokan_id) {
-                    $askareittenLuokat = new AskareittenLuokat(array('askare_id' => $askare->id, 'luokka_id' => $luokan_id));
-                    $askareittenLuokat->tallenna(self::get_user_logged_in()->id);
-                    if (array_key_exists('luokat', $params)) {
-                        foreach ($luokkien_idt as $luokan_id) {
-                            $askareittenLuokat = new AskareittenLuokat(array('askare_id' => $askare->id, 'luokka_id' => $luokan_id));
-                            $askareittenLuokat->tallenna(self::get_user_logged_in()->id);
-                        }
-                    }
-                    Redirect::to('/askare/' . $askare->id, array('message' => 'Askare on lisätty muistilistaasi!'));
-                }
-            }
+            self::tallenna_luokat($luokkien_idt, $askare);
+            Redirect::to('/askare/' . $askare->id, array('message' => 'Askare on lisätty muistilistaasi!'));
         } else {
             View::make('askare/add.html', array('errors' => $errors, 'attributes' => $attributes));
+        }
+    }
+
+    public static function tallenna_luokat($luokkien_idt, $askare) {
+        if (!is_null($luokkien_idt)) {
+            foreach ($luokkien_idt as $luokan_id) {
+                $askareittenLuokat = new AskareittenLuokat(array('askare_id' => $askare->id, 'luokka_id' => $luokan_id));
+                $askareittenLuokat->tallenna(self::get_user_logged_in()->id);
+            }
         }
     }
 
