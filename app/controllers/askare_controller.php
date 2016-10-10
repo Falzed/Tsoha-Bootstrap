@@ -20,7 +20,17 @@ class AskareController extends BaseController {
             $askareenLuokat[] = Luokka::kaikki($askare->kayttaja_id);
             $askareittenLuokat[] = $askareenLuokat;
         }
-        View::make('askare/listaus.html', array('askareet' => $askareet, 'askareittenLuokat' => $askareittenLuokat));
+        
+        $params = $_GET;
+        $options = array();
+        if(array_key_exists('sort', $params)) {
+            $options['sort'] = $params['sort'];
+        }
+        if(array_key_exists('asc_desc', $params)) {
+            $options['asc_desc'] = $params['asc_desc'];
+        }
+        View::make('askare/listaus.html', array('askareet' => $askareet, 
+            'askareittenLuokat' => $askareittenLuokat, 'options' => $options));
     }
 
     public static function askare($id) {

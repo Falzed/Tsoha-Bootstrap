@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Malli askareelle.
  *
@@ -13,8 +14,30 @@ class Askare extends BaseModel {
         $this->validators = array('validate_name', 'validate_priority');
     }
 
-    public static function kaikki($kayttaja_id) {
-        $query = DB::connection()->prepare('SELECT * FROM Askare WHERE kayttaja_id = :kayttaja_id');
+    public static function kaikki($kayttaja_id, $options) {
+        $statement = 'SELECT * FROM Askare WHERE kayttaja_id = :kayttaja_id';
+
+        if (array_key_exists('sort', $options)) {
+            $sort = $options['sort'];
+            $statement = $statement . ' ORDER BY :sort';
+            if (array_key_exists('asc_desc', $options)) {
+                $asc_desc = $options['asc_desc'];
+                $statement = $statement . ' :asc_desc';
+            }
+        }
+        $query = DB::connection()->prepare($statement);
+//        $query = DB::connection()->prepare('SELECT * FROM Askare WHERE kayttaja_id = :kayttaja_id ORDER BY :sort :asc_desc');
+//        if (array_key_exists('sort', $options)) {
+//            if ($options['sort'] == 'prioriteetti') {
+//                $query = DB::connection()->prepare('SELECT * FROM Askare WHERE kayttaja_id = :kayttaja_id ORDER BY prioriteetti');
+//            } else if ($options['sort'] == 'aakkos') {
+//                $query = DB::connection()->prepare('SELECT * FROM Askare WHERE kayttaja_id = :kayttaja_id ORDER BY nimi');
+//            } else {
+//                $query = DB::connection()->prepare('SELECT * FROM Askare WHERE kayttaja_id = :kayttaja_id ORDER BY id');
+//            }
+//        } else {
+//            $query = DB::connection()->prepare('SELECT * FROM Askare WHERE kayttaja_id = :kayttaja_id ORDER BY id');
+//        }
         $query->execute(array('kayttaja_id' => $kayttaja_id));
         $rows = $query->fetchAll();
         $askareet = array();

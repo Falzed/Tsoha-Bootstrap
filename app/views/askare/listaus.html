@@ -11,6 +11,19 @@
 <p>
     <a href="{{base_path}}/askare/add" class="btn btn-success">Lisää</a>
 </p>
+<form method="get" action="{{base_path}}/askareet">
+    <div class="form-group">
+        <label>Järjestys</label>
+        <input type="radio" name = "sort" value="prioriteetti"> Prioriteetti
+        <input type="radio" name = "sort" value="id"> ID
+        <input type="radio" name = "sort" value="nimi"> Nimi <br />
+        <input type="radio" name = "asc_desc" value="DESC"> Suurin ensin
+        <input type="radio" name = "asc_desc" value="ASC"> Pienin ensin
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Järjestä</button>
+    </div>
+</form>
 
 <table class="table table-striped table-bordered">
     <thead>
@@ -34,10 +47,10 @@
             <td>{{askare.prioriteetti}}</td>
             <td>
                 {%for askareenLuokat in askareittenLuokat %}
-                    {%for luokka in askareenLuokat %}
-                        {{luokka.nimi}}
-                        
-                    {%endfor %}
+                {%for luokka in askareenLuokat %}
+                {{luokka.nimi}}
+
+                {%endfor %}
                 {%endfor %}
             </td>
             <!--<td>{{askare.luokat_string}}</td>-->
