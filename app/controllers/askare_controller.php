@@ -139,40 +139,42 @@ class AskareController extends BaseController {
         $askare = new Askare($attributes);
         $errors = $askare->errors();
 
-        //refaktoroi myöhemmin omaan kontrolleriin
-        $poistettavat = $params['poistettava'];
-        foreach ($poistettavat as $poistettava) {
-            $askareittenLuokat = AskareittenLuokat::find($askare->id, $poistettava);
-            $askareittenLuokat->destroy();
+//        $poistettavat = $params['poistettava'];
+//        foreach ($poistettavat as $poistettava) {
+//            $askareittenLuokat = AskareittenLuokat::find($askare->id, $poistettava);
+//            $askareittenLuokat->destroy();
+//        }
+//        $lisattavat = $params['uudet_luokat'];
+//        foreach ($lisattavat as $lisattava) {
+//            $askareittenLuokat = new AskareittenLuokat(array('askare_id' => $askare->id, 'luokka_id' => $lisattava));
+//            $askareittenLuokat->tallenna(self::get_user_logged_in()->id);
+//        }
+
+        self::lisaa_ja_poista_luokat($params, $askare);
+        if (count($errors) == 0) {
+            $askare->update();
+            Redirect::to('/askare/' . $askare->id, array('message' => 'Askaretta on muokattu onnistuneesti!'));
+        } else {
+            View::make('askare/muokkaus.html', array('errors' => $errors, 'attributes' => $attributes));
         }
-        $lisattavat = $params['uudet_luokat'];
-        foreach ($lisattavat as $lisattava) {
-            $askareittenLuokat = new AskareittenLuokat(array('askare_id' => $askare->id, 'luokka_id' => $lisattava));
-            $askareittenLuokat->tallenna(self::get_user_logged_in()->id);
-
-            if (array_key_exists('poistettava', $params)) {
-                $poistettavat = $params['poistettava'];
-                foreach ($poistettavat as $poistettava) {
-                    $askareittenLuokat = AskareittenLuokat::find($askare->id, $poistettava);
-                    Kint::dump($poistettava);
-                    Kint::dump($askare);
-                    Kint::dump($askareittenLuokat);
-                    $askareittenLuokat->destroy();
-                }
+    }
+    
+    public static function lisaa_ja_poista_luokat($params, $askare) {
+        if (array_key_exists('poistettava', $params)) {
+            $poistettavat = $params['poistettava'];
+            foreach ($poistettavat as $poistettava) {
+                $askareittenLuokat = AskareittenLuokat::find($askare->id, $poistettava);
+                Kint::dump($poistettava);
+                Kint::dump($askare);
+                Kint::dump($askareittenLuokat);
+                $askareittenLuokat->destroy();
             }
-            if (array_key_exists('uudet_luokat', $params)) {
-                $lisattavat = $params['uudet_luokat'];
-                foreach ($lisattavat as $lisattava) {
-                    $askareittenLuokat = new AskareittenLuokat(array('askare_id' => $askare->id, 'luokka_id' => $lisattava));
-                    $askareittenLuokat->tallenna(self::get_user_logged_in()->id);
-                }
-            }
-
-            if (count($errors) == 0) {
-                $askare->update();
-                Redirect::to('/askare/' . $askare->id, array('message' => 'Askaretta on muokattu onnistuneesti!'));
-            } else {
-                View::make('askare/muokkaus.html', array('errors' => $errors, 'attributes' => $attributes));
+        }
+        if (array_key_exists('uudet_luokat', $params)) {
+            $lisattavat = $params['uudet_luokat'];
+            foreach ($lisattavat as $lisattava) {
+                $askareittenLuokat = new AskareittenLuokat(array('askare_id' => $askare->id, 'luokka_id' => $lisattava));
+                $askareittenLuokat->tallenna(self::get_user_logged_in()->id);
             }
         }
     }
