@@ -48,8 +48,8 @@ class LuokanAlaluokat extends BaseModel {
         return $ylaluokka;
     }
     public function tallenna() {
-        $query = DB::connection()->prepare('INSERT INTO LuokanAlaluokat (alaluokan_id, ylaluokan_id) VALUES (:alaluokan_id, :ylaluokan_id');
-        $query->execute(array('alaluokan_id' => $this->ylaluokan_id, 'alaluokan_id' => $this->ylaluokan_id));
+        $query = DB::connection()->prepare('INSERT INTO LuokanAlaluokat (alaluokan_id, ylaluokan_id) VALUES (:alaluokan_id, :ylaluokan_id)');
+        $query->execute(array('alaluokan_id' => $this->alaluokan_id, 'ylaluokan_id' => $this->ylaluokan_id));
         $query->fetch();
     }
 }
