@@ -64,7 +64,7 @@ class Kayttaja extends BaseModel {
         }
     }
     
-    public function tallenna($kayttaja_id) {
+    public function tallenna() {
         $query = DB::connection()->prepare('INSERT INTO Kayttaja (nimi, email, password) VALUES (:nimi, :email, :password) RETURNING id');
         $query->execute(array('nimi' => $this->nimi, 'email' => $this->email, 'password' => $this->password));
         $row = $query->fetch();
@@ -77,10 +77,12 @@ class Kayttaja extends BaseModel {
     }
     
     public function validate_password() {
-        if(!validate_string_length($this->password, 1)) {
-            return false;
+        $errors = array();
+        if(strcmp($this->password, $this->password_confirm)!=0) {
+            $errors[] = 'Salasanat olivat eri';
+            return $errors;
         }
-        return strcmp($this->password, $this->password_confirm);
+        return self::validate_string_length($this->password, 1);
     }
     
 }

@@ -46,7 +46,7 @@ class UserController extends BaseController {
         $errors = $kayttaja->errors();
         if (count($errors) == 0) {
             $kayttaja->tallenna();
-            Redirect::to('/askareet/');
+            Redirect::to('/login');
         } else {
             View::make('kayttaja/rekisteroityminen.html', array('errors' => $errors, 'attributes' => $attributes));
         }
