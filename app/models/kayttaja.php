@@ -7,10 +7,11 @@
 
 class Kayttaja extends BaseModel {
 
-    public $id, $nimi, $email, $password;
+    public $id, $nimi, $email, $password, $password_confirm;
 
     public function __construct($attributes) {
         parent::__construct($attributes);
+        $this->validators = array('validate_name', 'validate_password');
     }
 
     public static function kaikki() {
@@ -62,5 +63,24 @@ class Kayttaja extends BaseModel {
             return null;
         }
     }
-
+    
+    public function tallenna($kayttaja_id) {
+        $query = DB::connection()->prepare('INSERT INTO Kayttaja (nimi, email, password) VALUES (:nimi, :email, :password) RETURNING id');
+        $query->execute(array('nimi' => $this->nimi, 'email' => $this->email, 'password' => $this->password));
+        $row = $query->fetch();
+        $this->id = $row['id'];
+        Kint::dump($row);
+    }
+    
+    public function validate_name() {
+        return self::validate_string_length($this->nimi, 1);
+    }
+    
+    public function validate_password() {
+        if(!validate_string_length($this->password, 1)) {
+            return false;
+        }
+        return strcmp($this->password, $this->password_confirm);
+    }
+    
 }

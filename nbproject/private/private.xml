@@ -3,19 +3,41 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/oskari/TsohaSsh/app/models/LuokanAlaluokat.php</file>
-            <file>file:/home/oskari/TsohaSsh/app/views/askare/add.html</file>
-            <file>file:/home/oskari/TsohaSsh/app/controllers/askare_controller.php</file>
-            <file>file:/home/oskari/TsohaSsh/sql/create_tables.sql</file>
-            <file>file:/home/oskari/TsohaSsh/app/models/AskareittenLuokat.php</file>
-            <file>file:/home/oskari/TsohaSsh/sql/add_test_data.sql</file>
-            <file>file:/home/oskari/TsohaSsh/app/models/askare.php</file>
-            <file>file:/home/oskari/TsohaSsh/config/routes.php</file>
-            <file>file:/home/oskari/TsohaSsh/app/models/Luokka.php</file>
-            <file>file:/home/oskari/TsohaSsh/app/controllers/UserController.php</file>
-            <file>file:/home/oskari/TsohaSsh/app/controllers/luokkaController.php</file>
-            <file>file:/home/oskari/TsohaSsh/app/views/askare/muokkaus.html</file>
-            <file>file:/home/oskari/TsohaSsh/lib/base_model.php</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/lib/redirect.php</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/app/views/luokka/lista.html</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/app/models/kayttaja.php</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/app/views/luokka/luokka.html</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/lib/view.php</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/index.php</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/app/views/askare/listaus.html</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/app/controllers/hello_world_controller.php</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/sql/add_test_data.sql</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/app/controllers/askare_controller.php</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/app/models/Luokka.php</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/app/controllers/luokkaController.php</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/app/models/askare.php</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/bootstrap.sh</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/lib/database.php</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/app/views/askare/askare.html</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/app/views/base.html</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/create_tables.sh</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/app/views/macros/forms.html</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/lib/base_controller.php</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/sql/create_tables.sql</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/README.md</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/app/views/askare/muokkaus.html</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/app/models/AskareittenLuokat.php</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/config/environment.sh</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/config/routes.php</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/composer.lock</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/lib/base_model.php</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/composer.json</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/app/views/luokka/add.html</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/app/views/askare/add.html</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/config/database.php</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/assets/js/site.js</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/app/controllers/UserController.php</file>
+            <file>file:/C:/Users/Oskari/GitRepos/Tsoha-Bootstrap/app/models/LuokanAlaluokat.php</file>
         </group>
     </open-files>
 </project-private>
