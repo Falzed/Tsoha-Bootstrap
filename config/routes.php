@@ -18,7 +18,7 @@ $routes->post('/login', function() {
     UserController::handle_login();
 });
 $routes->get('/register', function() {
-    HelloWorldController::rekisteroityminen();
+    UserController::rekisteroityminen();
 });
 $routes->get('/askare/:id/edit', function($id) {
     AskareController::muokkaus($id);
@@ -70,6 +70,7 @@ $routes->post('/luokka/:id/delete', function($id) {
 $routes->post('/luokka', function() {
     LuokkaController::tallenna();
 });
-$routes->post('/luokat', function() {
-    LuokkaController::listaus();
+
+$routes->post('/register', function() {
+    UserController::tallenna();
 });

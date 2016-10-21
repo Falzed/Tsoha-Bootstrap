@@ -27,4 +27,28 @@ class UserController extends BaseController {
     public static function logout() {
         parent::logout();
     }
+    
+    public static function rekisteroityminen(){
+      View::make('kayttaja/rekisteroityminen.html');
+    }
+    
+    public static function tallenna() {
+        $params = $_POST;
+        $attributes = array(
+            'nimi' => $params['nimi'],
+            'email' => $params['email'],
+            'password' => $params['password'],
+            'password_confirm' => $params['password_confirm']
+        );
+        $kayttaja = new Kayttaja($params);
+        Kint::dump($params);
+
+        $errors = $kayttaja->errors();
+        if (count($errors) == 0) {
+            $kayttaja->tallenna();
+            Redirect::to('/askareet/');
+        } else {
+            View::make('kayttaja/rekisteroityminen.html', array('errors' => $errors, 'attributes' => $attributes));
+        }
+    }
 }
