@@ -40,10 +40,10 @@ class BaseModel {
         return $errors;
     }
 
-    public function validate_numeric($num) {
+    public function validate_integer($num) {
         $errors = array();
-        if(!is_numeric($num)) {
-            $errors[] = 'Ei ole numero';
+        if(!is_int($num)) {
+            $errors[] = 'Ei ole kokonaisluku';
         }
         return $errors;
     }

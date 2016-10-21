@@ -176,7 +176,7 @@ class Askare extends BaseModel {
     }
 
     public function validate_priority() {
-        return self::validate_numeric($this->prioriteetti);
+        return self::validate_integer($this->prioriteetti);
     }
 
     public function validate_description() {
